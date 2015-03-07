@@ -1,0 +1,209 @@
+<div id="nav">
+<% if current_user %>
+  <%= link_to "Home", root_path %> | 
+  <%= link_to "Administrator", events_path %> | 
+  <%= link_to "Register", new_user_path %> | 
+  <%= link_to "Edit Profile", edit_user_path(current_user.id) %> | 
+  <%= link_to 'Today Clients', clients_events_path %> | 
+  <%= link_to 'All Data', '/admin'%> | 
+  <%= link_to "Log out", :logout, method: :post %>
+<% end %>
+</div>
+
+<center>
+<h1>Administrator</h1>
+<p style="display: inline-block; color: #ffffff; background-color: DodgerBlue">Available Time Slots</p>
+<p style="display: inline-block; color: #ffffff; background-color: gray">Unavailable Time Slots</p>
+<div id='calendarEvents'></div>
+</center>
+
+<script>
+  $(document).ready(function() {
+      var validator = $("#new_event").validate({
+          submitHandler: function(form) {
+              $("#eventCalModal").modal('hide');
+              return true;
+          },
+
+          rules: {
+              "event[title]": {
+                  required: true
+              },
+              "event[description]": {
+                  required: true
+              }
+          },
+
+          messages: {
+              "event[title]": {
+                  required: "Please enter event title"
+              },
+              "event[description]": {
+                  required: "Please enter event description"
+              }
+          }
+      });
+
+      $('#calendarEvents').fullCalendar({
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+          },
+          selectable: true,
+          defaultView: "month",
+          minTime: "09:00:00",
+          maxTime: "20:00:00",
+          timeFormat: 'h:mm A',
+          displayEventEnd:true,
+          slotDuration: '00:15:00',
+          height: 1090,
+          eventSources: [
+            {
+              url: '/events/available.json'
+            },
+
+            {
+              url: '/events/occupied.json',
+              color: 'gray'
+            }
+          ],
+
+          select: function(start, end, allDay) {
+            st_year = moment(start).format('YYYY');
+            st_month = moment(start).format('M');
+            st_day = moment(start).format('D');
+            st_hour = moment(start).format('HH');
+            st_minute = moment(start).format('mm');
+            
+            et_year = moment(end).format('YYYY');
+            et_month = moment(end).format('M');
+            et_day = moment(end).format('D');
+            et_hour = moment(end).format('HH');
+            et_minute = moment(end).format('mm');
+
+            $('#eventCalModal').modal('show');
+            $('#eventCalModal').on('hidden.bs.modal', function(){
+                $(this).find('form')[0].reset();
+                validator.resetForm();
+             });
+            $('#eventCalModal #event_occupied').val(false);
+
+            $('#eventCalModal #event_start_time_1i').val(st_year);
+            $('#eventCalModal #event_start_time_2i').val(st_month);
+            $('#eventCalModal #event_start_time_3i').val(st_day);
+            $('#eventCalModal #event_start_time_4i').val(st_hour);
+            $('#eventCalModal #event_start_time_5i').val(st_minute);
+            
+            $('#eventCalModal #event_end_time_1i').val(et_year);
+            $('#eventCalModal #event_end_time_2i').val(et_month);
+            $('#eventCalModal #event_end_time_3i').val(et_day);
+            $('#eventCalModal #event_end_time_4i').val(et_hour);
+            $('#eventCalModal #event_end_time_5i').val(et_minute);
+          },
+
+          eventClick: function(event, jsEvent, view) {
+            var st = moment(event.start).format("hh:mmA, MMMM Do, YYYY");
+            var et = moment(event.end).format("hh:mmA, MMMM Do, YYYY");
+
+            if (event.occupied) {
+              $.ajax({
+                url: "/events/" + event.id + "/reservation_info",
+                type: "GET",
+                success: function(data){
+                  console.log(data);
+                  $("#reservation_modal_container").html(data);
+                  $('#reservationModal #modalTitle2').html(st + ', Already Taken');
+                  $("#reservationModal").modal("show");
+                }
+              }); 
+            }
+            else {
+              $.ajax({
+                url: "/events/" + event.id + "/reservation_without_info",
+                type: "GET",
+                success: function(data){
+                  $("#reservation_modal_container2").html(data);
+                  $('#reservationModal2 #modalTitle2').html(st + ', Available');
+                  $("#reservationModal2").modal("show");
+                }
+              });
+            }
+
+            return false;
+          },
+
+          eventRender: function(event, element) {
+            element.find('.fc-title').text(' ');
+          }
+      });
+  });
+</script>
+
+<div id="reservation_modal_container"></div>
+<div id="reservation_modal_container2"></div>
+
+<div id="eventCalModal" class="modal fade" tabindex='-1'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                <h4 id="modalTitle" class="modal-title"></h4>
+            </div>
+
+            <center><h2>New Event</h2></center>
+            <%= form_for @eventN, :html => {:class => "form-horizontal center"} do |f| %>
+              <div id="modalBody" class="modal-body">
+                  
+                  <div class="form-group">
+                      <%= f.label :title, "Title:", class: "col-md-4 control-label" %>
+                      <div class="col-md-8">
+                          <%= f.text_field :title, class: "form-control" %>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <%= f.label :description, "Description:", class: "col-md-4 control-label" %>
+                      <div class="col-md-8">
+                          <%= f.text_field :description, class: "form-control" %>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <%= f.label :start_time, "Start at:", class: "col-md-4 control-label" %>
+                      <div class="col-md-8">
+                          <%= f.datetime_select :start_time, class: "form-control" %>
+                      </div>
+                   </div>
+
+                  <div class="form-group">
+                      <%= f.label :end_time, "End at:", class: "col-md-4 control-label" %>
+                      <div class="col-md-8">
+                          <%= f.datetime_select :end_time, class: "form-control" %>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <div class="col-md-8">
+                          <%= f.hidden_field :occupied %>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <%= f.label :repeat, "Repeats", class: "col-md-4 control-label" %>
+                      <div class="col-md-8">
+                          <%= f.select :repeat, Event::REPEATS, {}, :onchange => "showPeriodAndFrequency(this.value);", class: "form-control" %>
+                      </div>
+                  </div>
+
+              </div>
+              <div class="modal-footer">
+                  <%= f.submit 'Create', :class => 'btn btn-primary', :id => 'submitButton' %>
+                  <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                  <span id = "creating_events" class="spinner" style = "display:none;">Creating, Please wait...</span>
+              </div>
+            <% end %>   
+        </div>
+    </div>
+</div>
+

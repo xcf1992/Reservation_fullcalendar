@@ -1,0 +1,43 @@
+<center><h1>All Clients Today</h1></center>
+
+<% @events.each_with_index do |event, index| %>
+  <b><h3>Clinet <%= index + 1 %> : </h3></b>  
+
+  <div>
+    <b>Title: </b> <%= event.title %>
+  </div>
+
+  <div>
+    <b>Description: </b> <%= event.description %>
+  </div>
+
+  <div>
+    <b>From: </b> <%= event.start_time %>
+  </div>
+
+  <div>
+    <b>To: </b> <%= event.end_time %>
+  </div>
+
+  <div>
+    <b>First Name: </b> <%= event.reservation.first_name %>
+  </div>
+
+  <div>
+    <b>Last Name: </b> <%= event.reservation.last_name %>
+  </div>
+
+  <div>
+    <b>Email Address: </b> <%= event.reservation.email %>
+  </div>
+
+  <div>
+    <b>Phone Number: </b> <%= event.reservation.phone_number %>
+  </div>
+
+  <div>
+    <b>Zip Code: </b> <%= event.reservation.zip_code %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', '/events' %>

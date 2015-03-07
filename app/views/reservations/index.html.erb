@@ -1,0 +1,31 @@
+<center><h1>All The Reservations</h1></center>
+ 
+<center><table>
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email</th>
+    <th>Phone Number</th>
+    <th>Zip Code</th>
+    <th>Start Time</th>
+    <th>End Time</th>
+    <th>Event Id</th>
+  </tr>
+ 
+  <% @reservations.each do |reservation| %>
+    <tr>
+      <td><%= reservation.first_name %></td>
+      <td><%= reservation.last_name %></td>
+      <td><%= reservation.email %></td>
+      <td><%= reservation.phone_number %></td>
+      <td><%= reservation.zip_code %></td>
+      <td><%= reservation.start_time %></td>
+      <td><%= reservation.end_time %></td>
+      <td><%= reservation.event_id %></td>
+      <td><%= link_to 'Show', reservation %></td>
+      <td><%= link_to 'Delete', reservation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>
+<%= link_to 'New Reservation', '/reservations/new' %>
+</center>

@@ -1,0 +1,54 @@
+<center><h1>Reservation Information</h1></center>
+<%= form_for @reservation do |f| %>
+  <% if @reservation.errors.any? %>
+    <div id = "error_explanation">
+      <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+ 
+      <ul>
+      <% @reservation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :first_name %><br>
+    <%= f.text_field :first_name %>
+  </div>
+ 
+  <div class="field">
+    <%= f.label :last_name %><br>
+    <%= f.text_field :last_name %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= f.label :phone_number %><br>
+    <%= f.text_field :phone_number %>
+  </div>
+
+  <div class="field">
+    <%= f.label :zip_code %><br>
+    <%= f.text_field :zip_code %>
+  </div>
+
+  <div class="field">
+    <%= f.label :start_time %><br>
+    <%= f.datetime_select :start_time %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :end_time %><br>
+    <%= f.datetime_select :end_time %>
+  </div>
+  <br>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,12 @@
+/*
+*= require fullcalendar
+*= require jquery.qtip.css
+*/
+
+@import "bootstrap-sprockets";
+@import 'bootstrap';
+@import 'bootstrap-datetimepicker';
+
+.fc{
+	width: 80%;
+}

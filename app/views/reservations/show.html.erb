@@ -1,0 +1,42 @@
+<h1>Your Reservation Confirmation</h1>
+<p>
+  <strong>First Name:</strong>
+  <%= @reservation.first_name %>
+</p>
+
+<p>
+  <strong>Last Name:</strong>
+  <%= @reservation.last_name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @reservation.email %>
+</p>
+
+<p>
+  <strong>Phone Number:</strong>
+  <%= @reservation.phone_number %>
+</p>
+
+<p>
+  <strong>Zip Code:</strong>
+  <%= @reservation.zip_code %>
+</p>
+
+<p>
+  <strong>Start Time:</strong>
+  <%= @reservation.start_time %>
+</p>
+
+<p>
+  <strong>End Time:</strong>
+  <%= @reservation.end_time %>
+</p>
+
+<p>
+  <strong>Event Id:</strong>
+  <%= @reservation.event_id %>
+</p>
+
+<%= link_to 'Available Reservations', '/reservations' %>
