@@ -9,8 +9,7 @@ class UserSessionsController < ApplicationController
   	if @user = login(params[:email], params[:password])
       redirect_to '/events'
     else
-      flash.now[:alert] = 'Login failed'
-      render action: 'new'
+      redirect_to(root_path, notice: 'Login failed!')
     end
   end
 

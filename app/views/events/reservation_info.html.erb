@@ -43,14 +43,11 @@
                   <div class="control-group">
                     <label class="control-label" for="zip">Zip Code: </label> <%= @reservation.zip_code %>
                   </div>
-
-                  <div>
-                    <%= link_to 'Delete',  @event,  method: :delete, data: { confirm: 'Are you sure?' } %>
-                  </div>
-
               </div>
+              
               <div class="modal-footer">
-                  <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <%= link_to 'Delete',  @event,  :class => "btn btn-primary", method: :delete, data: { confirm: 'Are you sure?' } %>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
               </div>  
         </div>
     </div>

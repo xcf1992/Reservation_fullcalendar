@@ -1,14 +1,9 @@
 <div id="nav">
 <% if current_user %>
-  <%= link_to "Home", root_path %> | 
   <%= link_to "Administrator", events_path %> | 
-  <%= link_to "Register", new_user_path %> | 
-  <%= link_to "Edit Profile", edit_user_path(current_user.id) %> | 
-  <%= link_to 'Today Clients', clients_events_path %> | 
-  <%= link_to 'All Data', '/admin'%> | 
   <%= link_to "Log out", :logout, method: :post %>  
 <% else %>
-<%= link_to "Login", :login %>
+<%= link_to "Login", "#loginModal", "data-toggle" => "modal" %>
 <% end %>
 </div>
 
@@ -124,7 +119,37 @@ $(document).ready(function() {
         }
     });
 });
-</script>>
+</script>
+
+<div id="loginModal" class="modal fade" tabindex='-1'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                <h4 id="myModalLabel">Log In</h4>
+            </div>
+
+            <%= form_tag user_sessions_path, :method => :post do %>
+              <div id="modalBody" class="modal-body">
+                <div class="field">
+                    <%= label_tag :email, "User:" %></br> 
+                    <%= text_field_tag :email %>
+                </div>
+                <div class="field">
+                    <%= label_tag :password, "Password:" %></br>
+                    <%= password_field_tag :password %>
+                </div>
+              </div>
+              
+              <div class="modal-footer">
+                <%= submit_tag "Login", class: "btn btn-large btn-primary" %>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+              </div>
+
+            <% end %>
+        </div>
+    </div>
+</div>
 
 <div id="fullCalModal" class="modal fade" tabindex='-1'>
     <div class="modal-dialog">

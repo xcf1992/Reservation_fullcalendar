@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       get 'occupied'
       get 'available'
       get 'clients'
+      post 'delete_all'
     end
 
     get "reservation_info", on: :member

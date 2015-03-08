@@ -117,6 +117,18 @@ class EventsController < ApplicationController
     #end
   end
 
+  def delete_all
+    dl_year = params["delete_time(1i)".to_sym]
+    dl_month = params["delete_time(2i)".to_sym]
+    dl_day = params["delete_time(3i)".to_sym]
+    dl_hour = params["delete_time(4i)".to_sym]
+    dl_minute = params["delete_time(5i)".to_sym]
+
+    dlt = dl_day+"/"+dl_month+"/"+dl_year+" "+dl_hour+":"+dl_minute
+    delete_time = DateTime.strptime(dlt, "%d/%m/%Y %H:%M")
+
+    Event.where('events.start_time < ?', delete_time).destroy_all
+  end
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
