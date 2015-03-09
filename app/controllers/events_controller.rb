@@ -52,34 +52,69 @@ class EventsController < ApplicationController
     else
       title = params[:event][:title]
       desc = params[:event][:description]
-      
-      st_year = params[:event]["start_time(1i)".to_sym]
-      st_month = params[:event]["start_time(2i)".to_sym]
-      st_day = params[:event]["start_time(3i)".to_sym]
-      st_hour = params[:event]["start_time(4i)".to_sym]
-      st_minute = params[:event]["start_time(5i)".to_sym]
-      
-      et_year = params[:event]["end_time(1i)".to_sym]
-      et_month = params[:event]["end_time(2i)".to_sym]
-      et_day = params[:event]["end_time(3i)".to_sym]
-      et_hour = params[:event]["end_time(4i)".to_sym]
-      et_minute = params[:event]["end_time(5i)".to_sym]
+      exception = params[:event][:exception]
+      replication = params[:event][:replicate]
+      if exception == "1"
+        except_start_hour = params[:event]["except_time_start(4i)".to_sym]
+        except_start_minute = params[:event]["except_time_start(5i)".to_sym]
+        except_end_hour = params[:event]["except_time_end(4i)".to_sym]
+        except_end_minute = params[:event]["except_time_end(5i)".to_sym]
 
-      st = st_day+"/"+st_month+"/"+st_year+" "+st_hour+":"+st_minute
-      et = et_day+"/"+et_month+"/"+et_year+" "+et_hour+":"+et_minute
-      start_hour = DateTime.strptime(st, "%d/%m/%Y %H:%M").strftime("%k").to_i
-      end_hour = DateTime.strptime(et, "%d/%m/%Y %H:%M").strftime("%k").to_i
+        except_from = DateTime.strptime(except_start_hour + except_start_minute, "%H%M")
+        except_to = DateTime.strptime(except_end_hour + except_end_minute, "%H%M")
+      end
+      
+      start_year = params[:event]["start_time(1i)".to_sym]
+      start_month = params[:event]["start_time(2i)".to_sym]
+      start_day = params[:event]["start_time(3i)".to_sym]
+      start_hour = params[:event]["start_time(4i)".to_sym]
+      start_minute = params[:event]["start_time(5i)".to_sym]
+      
+      end_year = params[:event]["end_time(1i)".to_sym]
+      end_month = params[:event]["end_time(2i)".to_sym]
+      end_day = params[:event]["end_time(3i)".to_sym]
+      end_hour = params[:event]["end_time(4i)".to_sym]
+      end_minute = params[:event]["end_time(5i)".to_sym]
+
+      st = start_day + "/" + start_month + "/" + start_year + " " + start_hour + ":" + start_minute
+      et = end_day + "/" + end_month + "/" + end_year + " " + end_hour + ":" + end_minute
+      from = DateTime.strptime(st, "%d/%m/%Y %H:%M").strftime("%k").to_i
+      to = DateTime.strptime(et, "%d/%m/%Y %H:%M").strftime("%k").to_i
 
       nst = DateTime.strptime(st, "%d/%m/%Y %H:%M")
       net = nst + 30.minutes
 
+      caliberate = 0
       while net <= DateTime.strptime(et, "%d/%m/%Y %H:%M")
         current_hour = nst.strftime("%k").to_i
-        if current_hour >= start_hour && current_hour <= end_hour
-          @newEvent = Event.new(:title => title, :description => desc, :start_time => nst, :end_time => net, :occupied => false)
-          @newEvent.save
+        nst_hour_minute = DateTime.strptime(nst.strftime("%H") + nst.strftime("%M"), "%H%M")
+        net_hour_minute = DateTime.strptime(net.strftime("%H") + net.strftime("%M"), "%H%M")
+
+        if current_hour >= from && current_hour <= to
+          if exception == "1"
+            if net_hour_minute <= except_from
+              @newEvent1 = Event.new(:title => title, :description => desc, :start_time => nst, :end_time => net, :occupied => false)
+              @newEvent1.save
+            elsif nst_hour_minute >= except_to
+              @newEvent2 = Event.new(:title => title, :description => desc, :start_time => nst, :end_time => net, :occupied => false)
+              @newEvent2.save
+            end
+
+            if nst_hour_minute >= except_from && nst_hour_minute < except_to && (nst_hour_minute + 30.minutes) > except_to
+              caliberate = 1
+            end
+          else
+            @newEvent = Event.new(:title => title, :description => desc, :start_time => nst, :end_time => net, :occupied => false)
+            @newEvent.save
+          end
         end
-        nst = net
+
+        if caliberate == 0
+          nst = net
+        else
+          nst = DateTime.strptime(nst.strftime("%Y") + nst.strftime("%m") + nst.strftime("%d") + except_to.strftime("%H") + except_to.strftime("%M"), "%Y%m%d%H%M")
+          caliberate = 0
+        end
         net = nst + 30.minutes
       end
       redirect_to '/events'
@@ -177,6 +212,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit('title', 'description', 'start_time', 'end_time', 'occupied', 'period', 'frequency', 'commit_button')
+      params.require(:event).permit('title', 'description', 'start_time', 'end_time', 'occupied')
     end
 end

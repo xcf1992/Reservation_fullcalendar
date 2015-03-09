@@ -69,7 +69,7 @@
             }
           ],
 
-          select: function(start, end, allDay) {
+          select: function(start, end, allDay, view) {
             st_year = moment(start).format('YYYY');
             st_month = moment(start).format('M');
             st_day = moment(start).format('D');
@@ -87,6 +87,7 @@
                 $(this).find('form')[0].reset();
                 validator.resetForm();
              });
+            
             $('#eventCalModal #event_occupied').val(false);
 
             $('#eventCalModal #event_start_time_1i').val(st_year);
