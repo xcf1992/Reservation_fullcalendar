@@ -22,37 +22,30 @@
 //= require jquery.validate.additional-methods
 //= require_tree .
 
-function showPeriodAndFrequency(value){
+function showReplication(value){
     switch (value) {
-        case 'Repeat':
-            $('#repeat').html('Repeat Every 30 Minutes');
-            $('#frequency').show();
+        case 'Replicate On Weekdays':
+            $('#stop_time').show();
             break;
+
+        case 'Replicate On Weekends':
+            $('#stop_time').show();
+            break;
+
         default:
-            $('#frequency').hide();
+            $('#stop_time').hide();
     }
 }
 
-$(document).ready(function() {
-	$('#create_event_dialog, #desc_dialog').on('submit', "#event_form", function(event) {
-		var $spinner = $('.spinner');
-    	event.preventDefault();
-    	$.ajax({
-      		type: "POST",
-      		data: $(this).serialize(),
-      		url: $(this).attr('action'),
-      		beforeSend: show_spinner,
-      		complete: hide_spinner,
-      		success: refetch_events_and_close_dialog,
-      		error: handle_error
-    	});
-
-    	function show_spinner() {
-      		$spinner.show();
-    	}
-
-    	function hide_spinner() {
-      		$spinner.hide();
-    	}
-  	});
-});
+function showException(value){
+    switch (value) {
+        case '1':
+            $('#except_time').show();
+            break;
+        case '0':
+            $('#except_time').hide();
+            break;
+        default:
+            $('#except_time').hide();
+    }
+}

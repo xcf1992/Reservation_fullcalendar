@@ -1,11 +1,17 @@
 class Event < ActiveRecord::Base
 	has_one :reservation, dependent: :destroy
   
-	attr_accessor :repeat, :frequency, :commit_button
+	attr_accessor :repeat, :stop_time, :replicate, :exception, :except_time_start, :except_time_end 
     
     REPEATS = [
                "Does not repeat",
                "Reapeat Every 30 Minutes"
+    ]
+
+    REPLICATES = [
+               "No Relication",
+               "Replicate On Weekdays",
+               "Replicate On Weekends"
     ]
 
 end
