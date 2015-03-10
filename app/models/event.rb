@@ -9,7 +9,7 @@ class Event < ActiveRecord::Base
     ]
 
     REPLICATES = [
-               "No Relication",
+               "No Replication",
                "Replicate On Weekdays",
                "Replicate On Weekends"
     ]

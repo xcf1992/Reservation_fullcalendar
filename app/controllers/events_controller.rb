@@ -78,7 +78,7 @@ class EventsController < ApplicationController
 
       start_time_str = start_year + "/" + start_month + "/" + start_day + " " + start_hour + ":" + start_minute
       
-      if (replication == "No Relication")
+      if (replication == "No Replication")
         stop_time_str = end_year + "/" + end_month + "/" + end_day + " " + end_hour + ":" + end_minute
         stop_time = DateTime.strptime(stop_time_str, "%Y/%m/%d %H:%M")
       else
@@ -108,8 +108,8 @@ class EventsController < ApplicationController
         net_hour_minute = DateTime.strptime(net.strftime("%H") + net.strftime("%M"), "%H%M")
         nst_day = nst.strftime("%u").to_i
 
-        if (nst_hour_minute >= from && net_hour_minute <= to) && 
-           (replication == "No Relication" || (replication == "Replicate On Weekdays" && nst_day >= 1 && nst_day <= 5) || (replication == "Replicate On Weekends" && nst_day == 6)) 
+        if (nst_hour_minute >= from && ((replication == "No Replication" && net_hour_minute <= eight_oclock_pm) || (replication != "No Replication" && net_hour_minute <= to))) && 
+           (replication == "No Replication" || (replication == "Replicate On Weekdays" && nst_day >= 1 && nst_day <= 5) || (replication == "Replicate On Weekends" && nst_day == 6)) 
           if exception == "1"
             if net_hour_minute <= except_from
               @newEvent1 = Event.new(:title => title, :description => desc, :start_time => nst, :end_time => net, :occupied => false)
