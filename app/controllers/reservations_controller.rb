@@ -13,7 +13,7 @@ class ReservationsController < ApplicationController
   	if @reservation.save
       @reservation.event.update_attribute(:occupied, true)
       redirect_to root_path,
-      notice: 'Reserve Succeed.'
+      notice: "Reserve Succeed!"
   	else 
   		render 'new'
   	end

@@ -87,7 +87,7 @@
                 $(this).find('form')[0].reset();
                 validator.resetForm();
              });
-            
+
             $('#eventCalModal #event_occupied').val(false);
 
             $('#eventCalModal #event_start_time_1i').val(st_year);
@@ -156,7 +156,7 @@
               <div id="modalBody" class="modal-body">
                 <div class="field">
                     <%= label_tag "Delete All Events Before:" %></br>
-                    <%= datetime_select :delete_time, params[:delete_time] %>
+                    <%= date_select :delete_time, params[:delete_time] %>
                 </div>
               </div>
               
@@ -213,7 +213,7 @@
                   <div class="form-group">
                     <%=f.label :exception, "Except", class: "col-md-4 control-label"%>
                     <div class="col-md-8">
-                      <%=f.check_box :exception, :onchange => "showException(this.value);" %>
+                      <%=f.check_box :exception, :onchange => "showException(this.checked);" %>
                     </div>
                   </div>
 

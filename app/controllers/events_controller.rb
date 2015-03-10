@@ -76,21 +76,40 @@ class EventsController < ApplicationController
       end_hour = params[:event]["end_time(4i)".to_sym]
       end_minute = params[:event]["end_time(5i)".to_sym]
 
-      st = start_day + "/" + start_month + "/" + start_year + " " + start_hour + ":" + start_minute
-      et = end_day + "/" + end_month + "/" + end_year + " " + end_hour + ":" + end_minute
-      from = DateTime.strptime(st, "%d/%m/%Y %H:%M").strftime("%k").to_i
-      to = DateTime.strptime(et, "%d/%m/%Y %H:%M").strftime("%k").to_i
+      start_time_str = start_year + "/" + start_month + "/" + start_day + " " + start_hour + ":" + start_minute
+      
+      if (replication == "No Relication")
+        stop_time_str = end_year + "/" + end_month + "/" + end_day + " " + end_hour + ":" + end_minute
+        stop_time = DateTime.strptime(stop_time_str, "%Y/%m/%d %H:%M")
+      else
+        stop_time_str = params[:event]["stop_time(1i)".to_sym] + "/" + params[:event]["stop_time(2i)".to_sym] + "/" + params[:event]["stop_time(3i)".to_sym] + " " + end_hour + ":" + end_minute
+        stop_time = DateTime.strptime(stop_time_str, "%Y/%m/%d %H:%M")
+      end
 
-      nst = DateTime.strptime(st, "%d/%m/%Y %H:%M")
+      from = DateTime.strptime(start_hour + start_minute, "%H%M")
+      nine_oclock_am = DateTime.strptime("09:00", "%H:%M")
+      to = DateTime.strptime(end_hour + end_minute, "%H%M")
+      eight_oclock_pm = DateTime.strptime("20:00", "%H:%M")
+
+      if from < nine_oclock_am
+        from = nine_oclock_am
+      end
+      if to > eight_oclock_pm
+        to = eight_oclock_pm
+      end
+
+      nst = DateTime.strptime(start_time_str, "%Y/%m/%d %H:%M")
       net = nst + 30.minutes
 
       caliberate = 0
-      while net <= DateTime.strptime(et, "%d/%m/%Y %H:%M")
-        current_hour = nst.strftime("%k").to_i
+      
+      while net <= stop_time
         nst_hour_minute = DateTime.strptime(nst.strftime("%H") + nst.strftime("%M"), "%H%M")
         net_hour_minute = DateTime.strptime(net.strftime("%H") + net.strftime("%M"), "%H%M")
+        nst_day = nst.strftime("%u").to_i
 
-        if current_hour >= from && current_hour <= to
+        if (nst_hour_minute >= from && net_hour_minute <= to) && 
+           (replication == "No Relication" || (replication == "Replicate On Weekdays" && nst_day >= 1 && nst_day <= 5) || (replication == "Replicate On Weekends" && nst_day == 6)) 
           if exception == "1"
             if net_hour_minute <= except_from
               @newEvent1 = Event.new(:title => title, :description => desc, :start_time => nst, :end_time => net, :occupied => false)
@@ -114,6 +133,10 @@ class EventsController < ApplicationController
         else
           nst = DateTime.strptime(nst.strftime("%Y") + nst.strftime("%m") + nst.strftime("%d") + except_to.strftime("%H") + except_to.strftime("%M"), "%Y%m%d%H%M")
           caliberate = 0
+        end
+
+        if nst.strftime("%k").to_i == 23 && (nst + 30.minutes).strftime("%k").to_i == 0
+          nst = (nst + 30.minutes).beginning_of_day
         end
         net = nst + 30.minutes
       end
@@ -153,16 +176,15 @@ class EventsController < ApplicationController
   end
 
   def delete_all
-    dl_year = params["delete_time(1i)".to_sym]
-    dl_month = params["delete_time(2i)".to_sym]
-    dl_day = params["delete_time(3i)".to_sym]
-    dl_hour = params["delete_time(4i)".to_sym]
-    dl_minute = params["delete_time(5i)".to_sym]
+    dl_year = params[:delete_time]["(1i)".to_sym]
+    dl_month = params[:delete_time]["(2i)".to_sym]
+    dl_day = params[:delete_time]["(3i)".to_sym]
 
-    dlt = dl_day+"/"+dl_month+"/"+dl_year+" "+dl_hour+":"+dl_minute
-    delete_time = DateTime.strptime(dlt, "%d/%m/%Y %H:%M")
+    dlt = dl_day+"/"+dl_month+"/"+dl_year
+    delete_time = DateTime.strptime(dlt, "%d/%m/%Y")
 
-    Event.where('events.start_time < ?', delete_time).destroy_all
+    @events = Event.where('events.start_time < ?', delete_time.beginning_of_day).destroy_all
+    redirect_to '/events'
   end
   # DELETE /events/1
   # DELETE /events/1.json

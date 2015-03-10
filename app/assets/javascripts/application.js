@@ -39,10 +39,10 @@ function showReplication(value){
 
 function showException(value){
     switch (value) {
-        case '1':
+        case true:
             $('#except_time').show();
             break;
-        case '0':
+        case false:
             $('#except_time').hide();
             break;
         default:
