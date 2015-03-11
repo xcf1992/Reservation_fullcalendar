@@ -73,13 +73,13 @@
             st_year = moment(start).format('YYYY');
             st_month = moment(start).format('M');
             st_day = moment(start).format('D');
-            st_hour = moment(start).format('HH');
+            st_hour = moment("9", "HH").format('HH');
             st_minute = moment(start).format('mm');
             
             et_year = moment(end).format('YYYY');
             et_month = moment(end).format('M');
             et_day = moment(end).format('D');
-            et_hour = moment(end).format('HH');
+            et_hour = moment("20", "HH").format('HH');
             et_minute = moment(end).format('mm');
 
             $('#eventCalModal').modal('show');
