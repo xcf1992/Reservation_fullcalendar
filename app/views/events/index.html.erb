@@ -74,7 +74,6 @@
             default_exc_end = moment("13", "HH").format('HH');
             $('#eventCalModal #event_except_time_start_4i').val(default_exc_start);
             $('#eventCalModal #event_except_time_end_4i').val(default_exc_end);
-            console.log(event_exception.checked);
 
             st_year = moment(start).format('YYYY');
             st_month = moment(start).format('M');
@@ -136,7 +135,6 @@
                 url: "/events/" + event.id + "/reservation_info",
                 type: "GET",
                 success: function(data){
-                  console.log(data);
                   $("#reservation_modal_container").html(data);
                   $('#reservationModal #modalTitle2').html(st + ', Already Taken');
                   $("#reservationModal").modal("show");
@@ -179,8 +177,12 @@
             <%= form_tag delete_all_events_path do %>
               <div id="modalBody" class="modal-body">
                 <div class="field">
-                    <%= label_tag "Delete All Events Before:" %></br>
-                    <%= date_select :delete_time, params[:delete_time] %>
+                    <%= label_tag "Delete All Events From:" %></br>
+                    <%= date_select :delete_time_start, params[:delete_time_start] %>
+                </div>
+                <div class="field">
+                    <%= label_tag "To:" %></br>
+                    <%= date_select :delete_time_end, params[:delete_time_end] %>
                 </div>
               </div>
               

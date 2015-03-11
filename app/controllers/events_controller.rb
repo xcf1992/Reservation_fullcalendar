@@ -176,14 +176,20 @@ class EventsController < ApplicationController
   end
 
   def delete_all
-    dl_year = params[:delete_time]["(1i)".to_sym]
-    dl_month = params[:delete_time]["(2i)".to_sym]
-    dl_day = params[:delete_time]["(3i)".to_sym]
+    dl_year_start = params[:delete_time_start]["(1i)".to_sym]
+    dl_month_start = params[:delete_time_start]["(2i)".to_sym]
+    dl_day_start = params[:delete_time_start]["(3i)".to_sym]
 
-    dlt = dl_day+"/"+dl_month+"/"+dl_year
-    delete_time = DateTime.strptime(dlt, "%d/%m/%Y")
+    dl_year_end = params[:delete_time_end]["(1i)".to_sym]
+    dl_month_end = params[:delete_time_end]["(2i)".to_sym]
+    dl_day_end = params[:delete_time_end]["(3i)".to_sym]
 
-    @events = Event.where('events.start_time < ?', delete_time.beginning_of_day).destroy_all
+    dlt_start = dl_day_start+"/"+dl_month_start+"/"+dl_year_start
+    dlt_end = dl_day_end+"/"+dl_month_end+"/"+dl_year_end
+    delete_time_start = DateTime.strptime(dlt_start, "%d/%m/%Y")
+    delete_time_end = DateTime.strptime(dlt_end, "%d/%m/%Y")
+
+    @events = Event.where('events.start_time < ?', delete_time_end.beginning_of_day).where('events.start_time > ?', delete_time_start.beginning_of_day).destroy_all
     redirect_to '/events'
   end
   # DELETE /events/1
