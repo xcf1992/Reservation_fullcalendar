@@ -70,25 +70,49 @@
           ],
 
           select: function(start, end, allDay, view) {
+            default_exc_start = moment("12", "HH").format('HH');
+            default_exc_end = moment("13", "HH").format('HH');
+            $('#eventCalModal #event_except_time_start_4i').val(default_exc_start);
+            $('#eventCalModal #event_except_time_end_4i').val(default_exc_end);
+            console.log(event_exception.checked);
+
             st_year = moment(start).format('YYYY');
             st_month = moment(start).format('M');
             st_day = moment(start).format('D');
-            st_hour = moment("9", "HH").format('HH');
+            if (view.name == "month") {
+              st_hour = moment("9", "HH").format('HH');
+            }
+            else {
+              st_hour = moment(start).format('HH');
+            }
             st_minute = moment(start).format('mm');
             
             et_year = moment(end).format('YYYY');
             et_month = moment(end).format('M');
-            et_day = moment(end).format('D');
-            et_hour = moment("20", "HH").format('HH');
+            if (view.name == "month") {
+              et_day = moment(end).dayOfYear(moment(end).dayOfYear() - 1).format('D');
+            }
+            else {
+              et_day = moment(end).format('D');
+            }
+            if (view.name == "month") {
+              et_hour = moment("20", "HH").format('HH');
+            }
+            else {
+              et_hour = moment(end).format('HH');
+            }
             et_minute = moment(end).format('mm');
 
             $('#eventCalModal').modal('show');
             $('#eventCalModal').on('hidden.bs.modal', function(){
                 $(this).find('form')[0].reset();
+                $('#except_time').hide();
                 validator.resetForm();
              });
 
             $('#eventCalModal #event_occupied').val(false);
+            $('#eventCalModal #event_title').val("STD/HIV Test");
+            $('#eventCalModal #event_description').val("Anything You Want To Put Here");
 
             $('#eventCalModal #event_start_time_1i').val(st_year);
             $('#eventCalModal #event_start_time_2i').val(st_month);
