@@ -29,6 +29,13 @@
       format: 'YYYY - MM - DD',
       defaultDate:dateNow
     });
+    $('#deleteModal').on('hidden.bs.modal', function(){
+        $(this).find('form')[0].reset();
+     });
+    $('#deleteModal').on('show.bs.modal', function(){
+        $('#deleteModal #delete_time_start').val(moment(dateNow).format('YYYY - MM - DD'));
+        $('#deleteModal #delete_time_end').val(moment(dateNow).format('YYYY - MM - DD'));
+     });
 
     var validator = $("#new_event").validate({
       submitHandler: function(form) {
