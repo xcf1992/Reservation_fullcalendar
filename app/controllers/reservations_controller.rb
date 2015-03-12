@@ -31,7 +31,7 @@ class ReservationsController < ApplicationController
     @reservation.event.update_attribute(:occupied, false)
     @reservation.destroy
     respond_to do |format|
-      format.html { redirect_to reservations_url }
+      format.html { redirect_to '/events' }
       format.json { head :no_content }
     end
   end
