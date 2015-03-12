@@ -18,148 +18,159 @@
 </center>
 
 <script>
+
   $(document).ready(function() {
-      var validator = $("#new_event").validate({
-          submitHandler: function(form) {
-              $("#eventCalModal").modal('hide');
-              return true;
-          },
+    var dateNow = new Date();
+    $('#datetimepicker1').datetimepicker({
+      format: 'YYYY - MM - DD',
+      defaultDate:dateNow
+    });
+    $('#datetimepicker2').datetimepicker({
+      format: 'YYYY - MM - DD',
+      defaultDate:dateNow
+    });
 
-          rules: {
-              "event[title]": {
-                  required: true
-              },
-              "event[description]": {
-                  required: true
-              }
-          },
+    var validator = $("#new_event").validate({
+      submitHandler: function(form) {
+          $("#eventCalModal").modal('hide');
+          return true;
+      },
 
-          messages: {
-              "event[title]": {
-                  required: "Please enter event title"
-              },
-              "event[description]": {
-                  required: "Please enter event description"
-              }
+      rules: {
+          "event[title]": {
+              required: true
+          },
+          "event[description]": {
+              required: true
           }
-      });
+      },
 
-      $('#calendarEvents').fullCalendar({
-          header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
+      messages: {
+          "event[title]": {
+              required: "Please enter event title"
           },
-          selectable: true,
-          defaultView: "month",
-          minTime: "09:00:00",
-          maxTime: "20:00:00",
-          timeFormat: 'h:mm A',
-          displayEventEnd:true,
-          slotDuration: '00:15:00',
-          height: 1090,
-          eventSources: [
-            {
-              url: '/events/available.json'
-            },
-
-            {
-              url: '/events/occupied.json',
-              color: 'gray'
-            }
-          ],
-
-          select: function(start, end, allDay, view) {
-            default_exc_start = moment("12", "HH").format('HH');
-            default_exc_end = moment("13", "HH").format('HH');
-            $('#eventCalModal #event_except_time_start_4i').val(default_exc_start);
-            $('#eventCalModal #event_except_time_end_4i').val(default_exc_end);
-
-            st_year = moment(start).format('YYYY');
-            st_month = moment(start).format('M');
-            st_day = moment(start).format('D');
-            if (view.name == "month") {
-              st_hour = moment("9", "HH").format('HH');
-            }
-            else {
-              st_hour = moment(start).format('HH');
-            }
-            st_minute = moment(start).format('mm');
-            
-            et_year = moment(end).format('YYYY');
-            et_month = moment(end).format('M');
-            if (view.name == "month") {
-              et_day = moment(end).dayOfYear(moment(end).dayOfYear() - 1).format('D');
-            }
-            else {
-              et_day = moment(end).format('D');
-            }
-            if (view.name == "month") {
-              et_hour = moment("20", "HH").format('HH');
-            }
-            else {
-              et_hour = moment(end).format('HH');
-            }
-            et_minute = moment(end).format('mm');
-
-            $('#eventCalModal').modal('show');
-            $('#eventCalModal').on('hidden.bs.modal', function(){
-                $(this).find('form')[0].reset();
-                $('#except_time').hide();
-                validator.resetForm();
-             });
-
-            $('#eventCalModal #event_occupied').val(false);
-            $('#eventCalModal #event_title').val("STD/HIV Test");
-            $('#eventCalModal #event_description').val("Anything You Want To Put Here");
-
-            $('#eventCalModal #event_start_time_1i').val(st_year);
-            $('#eventCalModal #event_start_time_2i').val(st_month);
-            $('#eventCalModal #event_start_time_3i').val(st_day);
-            $('#eventCalModal #event_start_time_4i').val(st_hour);
-            $('#eventCalModal #event_start_time_5i').val(st_minute);
-            
-            $('#eventCalModal #event_end_time_1i').val(et_year);
-            $('#eventCalModal #event_end_time_2i').val(et_month);
-            $('#eventCalModal #event_end_time_3i').val(et_day);
-            $('#eventCalModal #event_end_time_4i').val(et_hour);
-            $('#eventCalModal #event_end_time_5i').val(et_minute);
-          },
-
-          eventClick: function(event, jsEvent, view) {
-            var st = moment(event.start).format("hh:mmA, MMMM Do, YYYY");
-            var et = moment(event.end).format("hh:mmA, MMMM Do, YYYY");
-
-            if (event.occupied) {
-              $.ajax({
-                url: "/events/" + event.id + "/reservation_info",
-                type: "GET",
-                success: function(data){
-                  $("#reservation_modal_container").html(data);
-                  $('#reservationModal #modalTitle2').html(st + ', Already Taken');
-                  $("#reservationModal").modal("show");
-                }
-              }); 
-            }
-            else {
-              $.ajax({
-                url: "/events/" + event.id + "/reservation_without_info",
-                type: "GET",
-                success: function(data){
-                  $("#reservation_modal_container2").html(data);
-                  $('#reservationModal2 #modalTitle2').html(st + ', Available');
-                  $("#reservationModal2").modal("show");
-                }
-              });
-            }
-
-            return false;
-          },
-
-          eventRender: function(event, element) {
-            element.find('.fc-title').text(' ');
+          "event[description]": {
+              required: "Please enter event description"
           }
-      });
+      }
+    });
+
+    $('#calendarEvents').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay'
+        },
+        selectable: true,
+        defaultView: "month",
+        minTime: "09:00:00",
+        maxTime: "20:00:00",
+        timeFormat: 'h:mm A',
+        displayEventEnd:true,
+        slotDuration: '00:15:00',
+        height: 1090,
+        eventSources: [
+          {
+            url: '/events/available.json'
+          },
+
+          {
+            url: '/events/occupied.json',
+            color: 'gray'
+          }
+        ],
+
+        select: function(start, end, allDay, view) {
+          default_exc_start = moment("12", "HH").format('HH');
+          default_exc_end = moment("13", "HH").format('HH');
+          $('#eventCalModal #event_except_time_start_4i').val(default_exc_start);
+          $('#eventCalModal #event_except_time_end_4i').val(default_exc_end);
+
+          st_year = moment(start).format('YYYY');
+          st_month = moment(start).format('M');
+          st_day = moment(start).format('D');
+          if (view.name == "month") {
+            st_hour = moment("9", "HH").format('HH');
+          }
+          else {
+            st_hour = moment(start).format('HH');
+          }
+          st_minute = moment(start).format('mm');
+          
+          et_year = moment(end).format('YYYY');
+          et_month = moment(end).format('M');
+          if (view.name == "month") {
+            et_day = moment(end).dayOfYear(moment(end).dayOfYear() - 1).format('D');
+          }
+          else {
+            et_day = moment(end).format('D');
+          }
+          if (view.name == "month") {
+            et_hour = moment("20", "HH").format('HH');
+          }
+          else {
+            et_hour = moment(end).format('HH');
+          }
+          et_minute = moment(end).format('mm');
+
+          $('#eventCalModal').modal('show');
+          $('#eventCalModal').on('hidden.bs.modal', function(){
+              $(this).find('form')[0].reset();
+              $('#except_time').hide();
+              validator.resetForm();
+           });
+
+          $('#eventCalModal #event_occupied').val(false);
+          $('#eventCalModal #event_title').val("STD/HIV Test");
+          $('#eventCalModal #event_description').val("Anything You Want To Put Here");
+
+          $('#eventCalModal #event_start_time_1i').val(st_year);
+          $('#eventCalModal #event_start_time_2i').val(st_month);
+          $('#eventCalModal #event_start_time_3i').val(st_day);
+          $('#eventCalModal #event_start_time_4i').val(st_hour);
+          $('#eventCalModal #event_start_time_5i').val(st_minute);
+          
+          $('#eventCalModal #event_end_time_1i').val(et_year);
+          $('#eventCalModal #event_end_time_2i').val(et_month);
+          $('#eventCalModal #event_end_time_3i').val(et_day);
+          $('#eventCalModal #event_end_time_4i').val(et_hour);
+          $('#eventCalModal #event_end_time_5i').val(et_minute);
+        },
+
+        eventClick: function(event, jsEvent, view) {
+          var st = moment(event.start).format("hh:mmA, MMMM Do, YYYY");
+          var et = moment(event.end).format("hh:mmA, MMMM Do, YYYY");
+
+          if (event.occupied) {
+            $.ajax({
+              url: "/events/" + event.id + "/reservation_info",
+              type: "GET",
+              success: function(data){
+                $("#reservation_modal_container").html(data);
+                $('#reservationModal #modalTitle2').html(st + ', Already Taken');
+                $("#reservationModal").modal("show");
+              }
+            }); 
+          }
+          else {
+            $.ajax({
+              url: "/events/" + event.id + "/reservation_without_info",
+              type: "GET",
+              success: function(data){
+                $("#reservation_modal_container2").html(data);
+                $('#reservationModal2 #modalTitle2').html(st + ', Available');
+                $("#reservationModal2").modal("show");
+              }
+            });
+          }
+
+          return false;
+        },
+
+        eventRender: function(event, element) {
+          element.find('.fc-title').text(' ');
+        }
+    });
   });
 </script>
 
@@ -174,16 +185,24 @@
                 <h4 id="myModalLabel">Events Deletion</h4>
             </div>
 
-            <%= form_tag delete_all_events_path do %>
+            <%= form_tag delete_all_events_path, :class => "form-inline" do %>
               <div id="modalBody" class="modal-body">
-                <div class="field">
-                    <%= label_tag "Delete All Events From:" %></br>
-                    <%= date_select :delete_time_start, params[:delete_time_start] %>
+                <div class="form-group">
+                  <%= label_tag "Delere All Events From:" %></br>
+                  <div class='input-group date' id='datetimepicker1'>
+                    <%= text_field_tag :delete_time_start, params[:delete_time_start], class: "form-control" %>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                  </div>
                 </div>
-                <div class="field">
-                    <%= label_tag "To:" %></br>
-                    <%= date_select :delete_time_end, params[:delete_time_end] %>
+
+                <div class="form-group">
+                  <%= label_tag "To:" %></br>
+                  <div class='input-group date' id='datetimepicker2'>
+                    <%= text_field_tag :delete_time_end, params[:delete_time_end], class: "form-control" %>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                  </div>
                 </div>
+                    
               </div>
               
               <div class="modal-footer">
