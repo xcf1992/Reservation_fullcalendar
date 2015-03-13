@@ -54,14 +54,13 @@ class EventsController < ApplicationController
       desc = params[:event][:description]
       exception = params[:event][:exception]
       replication = params[:event][:replicate]
-      if exception == "1"
-        except_start_hour = params[:event]["except_time_start(4i)".to_sym]
-        except_start_minute = params[:event]["except_time_start(5i)".to_sym]
-        except_end_hour = params[:event]["except_time_end(4i)".to_sym]
-        except_end_minute = params[:event]["except_time_end(5i)".to_sym]
 
-        except_from = DateTime.strptime(except_start_hour + except_start_minute, "%H%M")
-        except_to = DateTime.strptime(except_end_hour + except_end_minute, "%H%M")
+      if exception == "1"
+        except_start = params[:event][:except_time_start]
+        except_end = params[:event][:except_time_end]
+
+        except_from = DateTime.strptime(except_start, "%H:%M")
+        except_to = DateTime.strptime(except_end, "%H:%M")
       end
       
       start_year = params[:event]["start_time(1i)".to_sym]

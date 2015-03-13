@@ -93,10 +93,17 @@
             format: 'YYYY - MM - DD',
             defaultDate:dateNow
           });
-          default_exc_start = moment("12", "HH").format('HH');
-          default_exc_end = moment("13", "HH").format('HH');
-          $('#eventCalModal #event_except_time_start_4i').val(default_exc_start);
-          $('#eventCalModal #event_except_time_end_4i').val(default_exc_end);
+
+          twelve_oclock = new Date(moment("12:00", "HH:mm"));
+          thirteen_oclock = new Date(moment("13:00", "HH:mm"));
+          $('#datetimepicker4').datetimepicker({
+            format: 'HH:mm',
+            defaultDate:twelve_oclock
+          });
+          $('#datetimepicker5').datetimepicker({
+            format: 'HH:mm',
+            defaultDate:thirteen_oclock
+          });
 
           st_year = moment(start).format('YYYY');
           st_month = moment(start).format('M');
@@ -130,6 +137,10 @@
               $(this).find('form')[0].reset();
               $('#except_time').hide();
               validator.resetForm();
+           });
+          $('#eventCalModal').on('show.bs.modal', function(){
+              $('#eventCalModal #datetimepicker4').val(moment(twelve_oclock).format('HH:mm'));
+              $('#eventCalModal #datetimepicker5').val(moment(thirteen_oclock).format('HH:mm'));
            });
 
           $('#eventCalModal #event_occupied').val(false);
@@ -276,11 +287,9 @@
 
                   <div id = "except_time" style = "display:none;" class="form-group">
                     <%=f.label :except_time, "No Events During:", class: "col-md-4 control-label" %>
-                    <div class="col-md-8">
-                      <%=f.time_select :except_time_start, :minute_step => 15, class: "form-control" %><b> ~ </b> 
-                      <span>
-                        <%=f.time_select :except_time_end, :minute_step => 15, class: "form-control" %>
-                      </span>
+                    <div class="col-sm-8">
+                        <%=f.text_field :except_time_start, class: "form-control", id: "datetimepicker4" %><b> ~ </b>
+                        <%=f.text_field :except_time_end, class: "form-control", id: "datetimepicker5" %>
                     </div>
                   </div>
 
