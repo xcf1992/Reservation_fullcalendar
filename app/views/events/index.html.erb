@@ -29,6 +29,7 @@
       format: 'YYYY - MM - DD',
       defaultDate:dateNow
     });
+    
     $('#deleteModal').on('hidden.bs.modal', function(){
         $(this).find('form')[0].reset();
      });
@@ -88,6 +89,10 @@
         ],
 
         select: function(start, end, allDay, view) {
+          $('#datetimepicker3').datetimepicker({
+            format: 'YYYY - MM - DD',
+            defaultDate:dateNow
+          });
           default_exc_start = moment("12", "HH").format('HH');
           default_exc_end = moment("13", "HH").format('HH');
           $('#eventCalModal #event_except_time_start_4i').val(default_exc_start);
@@ -296,7 +301,10 @@
                   <div id = "stop_time" style = "display:none;" class="form-group">
                     <%=f.label :stop_time, "Until:", class: "col-md-4 control-label" %>
                     <div class="col-md-8">
-                      <%=f.date_select :stop_time, class: "form-control" %>
+                      <div class='input-group date' id='datetimepicker3'>
+                        <%=f.text_field :stop_time, class: "form-control" %>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                      </div> 
                     </div>
                   </div>
 

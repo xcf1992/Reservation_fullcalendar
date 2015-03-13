@@ -82,8 +82,8 @@ class EventsController < ApplicationController
         stop_time_str = end_year + "/" + end_month + "/" + end_day + " " + end_hour + ":" + end_minute
         stop_time = DateTime.strptime(stop_time_str, "%Y/%m/%d %H:%M")
       else
-        stop_time_str = params[:event]["stop_time(1i)".to_sym] + "/" + params[:event]["stop_time(2i)".to_sym] + "/" + params[:event]["stop_time(3i)".to_sym] + " " + end_hour + ":" + end_minute
-        stop_time = DateTime.strptime(stop_time_str, "%Y/%m/%d %H:%M")
+        stop_time_str = params[:event][:stop_time] + " " + end_hour + ":" + end_minute
+        stop_time = DateTime.strptime(stop_time_str, "%Y - %m - %d %H:%M")
       end
 
       from = DateTime.strptime(start_hour + start_minute, "%H%M")
