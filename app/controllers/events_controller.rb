@@ -62,32 +62,24 @@ class EventsController < ApplicationController
         except_from = DateTime.strptime(except_start, "%H:%M")
         except_to = DateTime.strptime(except_end, "%H:%M")
       end
-      
-      start_year = params[:event]["start_time(1i)".to_sym]
-      start_month = params[:event]["start_time(2i)".to_sym]
-      start_day = params[:event]["start_time(3i)".to_sym]
-      start_hour = params[:event]["start_time(4i)".to_sym]
-      start_minute = params[:event]["start_time(5i)".to_sym]
-      
-      end_year = params[:event]["end_time(1i)".to_sym]
-      end_month = params[:event]["end_time(2i)".to_sym]
-      end_day = params[:event]["end_time(3i)".to_sym]
-      end_hour = params[:event]["end_time(4i)".to_sym]
-      end_minute = params[:event]["end_time(5i)".to_sym]
 
-      start_time_str = start_year + "/" + start_month + "/" + start_day + " " + start_hour + ":" + start_minute
-      
+      start_time_str = params[:start_time]
+      start_time = DateTime.strptime(start_time_str, "%Y - %m - %d %H:%M")
+      start_hour_minute = start_time.strftime("%H:%M")
+      start_date = start_time.strftime("%Y - %m - %d")
+      end_hour_minute = DateTime.strptime(params[:end_time], "%Y - %m - %d %H:%M").strftime("%H:%M")
+
       if (replication == "No Replication")
-        stop_time_str = end_year + "/" + end_month + "/" + end_day + " " + end_hour + ":" + end_minute
-        stop_time = DateTime.strptime(stop_time_str, "%Y/%m/%d %H:%M")
+        stop_time_str = params[:end_time]
+        stop_time = DateTime.strptime(stop_time_str, "%Y - %m - %d %H:%M")
       else
-        stop_time_str = params[:event][:stop_time] + " " + end_hour + ":" + end_minute
+        stop_time_str = params[:event][:stop_time] + " " + end_hour_minute
         stop_time = DateTime.strptime(stop_time_str, "%Y - %m - %d %H:%M")
       end
 
-      from = DateTime.strptime(start_hour + start_minute, "%H%M")
+      from = DateTime.strptime(start_hour_minute, "%H:%M")
       nine_oclock_am = DateTime.strptime("09:00", "%H:%M")
-      to = DateTime.strptime(end_hour + end_minute, "%H%M")
+      to = DateTime.strptime(end_hour_minute, "%H:%M")
       eight_oclock_pm = DateTime.strptime("20:00", "%H:%M")
 
       if from < nine_oclock_am
@@ -97,7 +89,7 @@ class EventsController < ApplicationController
         to = eight_oclock_pm
       end
 
-      nst = DateTime.strptime(start_time_str, "%Y/%m/%d %H:%M")
+      nst = DateTime.strptime(start_time_str, "%Y - %m - %d %H:%M")
       net = nst + 30.minutes
 
       caliberate = 0

@@ -96,6 +96,24 @@
 
           twelve_oclock = new Date(moment("12:00", "HH:mm"));
           thirteen_oclock = new Date(moment("13:00", "HH:mm"));
+
+          
+          if (view.name == "month") {
+            start.hour(9);
+            start_time = moment(start).format("YYYY - MM - DD HH:mm");
+
+            end.dayOfYear(end.dayOfYear() - 1)
+            end.hour(20);
+            end_time = moment(end).format("YYYY - MM - DD HH:mm");
+          }
+          else {
+            start_time = moment(start).format("YYYY - MM - DD HH:mm");
+            end_time = moment(end).format("YYYY - MM - DD HH:mm");
+          }
+
+          default_start = moment(start_time, "YYYY - MM - DD HH:mm");
+          default_end = moment(end_time, "YYYY - MM - DD HH:mm");
+
           $('#datetimepicker4').datetimepicker({
             format: 'HH:mm',
             defaultDate:twelve_oclock
@@ -104,33 +122,16 @@
             format: 'HH:mm',
             defaultDate:thirteen_oclock
           });
-
-          st_year = moment(start).format('YYYY');
-          st_month = moment(start).format('M');
-          st_day = moment(start).format('D');
-          if (view.name == "month") {
-            st_hour = moment("9", "HH").format('HH');
-          }
-          else {
-            st_hour = moment(start).format('HH');
-          }
-          st_minute = moment(start).format('mm');
-          
-          et_year = moment(end).format('YYYY');
-          et_month = moment(end).format('M');
-          if (view.name == "month") {
-            et_day = moment(end).dayOfYear(moment(end).dayOfYear() - 1).format('D');
-          }
-          else {
-            et_day = moment(end).format('D');
-          }
-          if (view.name == "month") {
-            et_hour = moment("20", "HH").format('HH');
-          }
-          else {
-            et_hour = moment(end).format('HH');
-          }
-          et_minute = moment(end).format('mm');
+          $('#datetimepicker6').datetimepicker({
+            defaultDate: default_start,
+            format: 'YYYY - MM - DD HH:mm',
+            sideBySide: true  
+          });
+          $('#datetimepicker7').datetimepicker({
+            defaultDate: default_end,
+            format: 'YYYY - MM - DD HH:mm',
+            sideBySide: true  
+          });
 
           $('#eventCalModal').modal('show');
           $('#eventCalModal').on('hidden.bs.modal', function(){
@@ -141,23 +142,18 @@
           $('#eventCalModal').on('show.bs.modal', function(){
               $('#eventCalModal #datetimepicker4').val(moment(twelve_oclock).format('HH:mm'));
               $('#eventCalModal #datetimepicker5').val(moment(thirteen_oclock).format('HH:mm'));
+
+              $('#eventCalModal #datetimepicker6').val(start_time);
+              $('#eventCalModal #datetimepicker7').val(end_time);
            });
 
           $('#eventCalModal #event_occupied').val(false);
           $('#eventCalModal #event_title').val("STD/HIV Test");
           $('#eventCalModal #event_description').val("Anything You Want To Put Here");
-
-          $('#eventCalModal #event_start_time_1i').val(st_year);
-          $('#eventCalModal #event_start_time_2i').val(st_month);
-          $('#eventCalModal #event_start_time_3i').val(st_day);
-          $('#eventCalModal #event_start_time_4i').val(st_hour);
-          $('#eventCalModal #event_start_time_5i').val(st_minute);
-          
-          $('#eventCalModal #event_end_time_1i').val(et_year);
-          $('#eventCalModal #event_end_time_2i').val(et_month);
-          $('#eventCalModal #event_end_time_3i').val(et_day);
-          $('#eventCalModal #event_end_time_4i').val(et_hour);
-          $('#eventCalModal #event_end_time_5i').val(et_minute);
+          $('#eventCalModal #datetimepicker4').val(moment(twelve_oclock).format('HH:mm'));
+          $('#eventCalModal #datetimepicker5').val(moment(thirteen_oclock).format('HH:mm'));
+          $('#eventCalModal #start_time').val(start_time);
+          $('#eventCalModal #end_time').val(end_time);
         },
 
         eventClick: function(event, jsEvent, view) {
@@ -267,14 +263,22 @@
                   <div class="form-group">
                       <%= f.label :start_time, "Start at:", class: "col-md-4 control-label" %>
                       <div class="col-md-8">
-                          <%= f.datetime_select :start_time, :minute_step => 15, class: "form-control" %>
+                        <div class='input-group date' id='datetimepicker6'>
+                          <%=f.text_field :start_time, class: "form-control", id: "start_time", name: "start_time" %>
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                        </div>
                       </div>
                    </div>
 
                   <div class="form-group">
                       <%= f.label :end_time, "End at:", class: "col-md-4 control-label" %>
                       <div class="col-md-8">
-                          <%= f.datetime_select :end_time, :minute_step => 15, class: "form-control" %>
+                        <div class='input-group date' id="datetimepicker7" >
+                          <%=f.text_field :end_time, class: "form-control", id: "end_time", name: "end_time" %>
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                        </div>
                       </div>
                   </div>
 
