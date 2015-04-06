@@ -1,43 +1,37 @@
-<center><h1>All Clients Today</h1></center>
-
-<% @events.each_with_index do |event, index| %>
-  <b><h3>Clinet <%= index + 1 %> : </h3></b>  
-
-  <div>
-    <b>Title: </b> <%= event.title %>
-  </div>
-
-  <div>
-    <b>Description: </b> <%= event.description %>
-  </div>
-
-  <div>
-    <b>From: </b> <%= event.start_time %>
-  </div>
-
-  <div>
-    <b>To: </b> <%= event.end_time %>
-  </div>
-
-  <div>
-    <b>First Name: </b> <%= event.reservation.first_name %>
-  </div>
-
-  <div>
-    <b>Last Name: </b> <%= event.reservation.last_name %>
-  </div>
-
-  <div>
-    <b>Email Address: </b> <%= event.reservation.email %>
-  </div>
-
-  <div>
-    <b>Phone Number: </b> <%= event.reservation.phone_number %>
-  </div>
-
-  <div>
-    <b>Zip Code: </b> <%= event.reservation.zip_code %>
-  </div>
-<% end %>
-
 <%= link_to 'Back', '/events' %>
+<center><h1>All Clients Today</h1>
+<table>
+  <tr>
+    <th style="padding:0 15px 0 15px;">Id</th>
+    <th style="padding:0 15px 0 15px;">Test</th>
+    <th style="padding:0 15px 0 15px;">Client Name</th>
+    <th style="padding:0 15px 0 15px;">From</th>
+    <th style="padding:0 15px 0 15px;">To</th>
+    <th style="padding:0 15px 0 15px;">Email</th>
+    <th style="padding:0 15px 0 15px;">Phone Number</th>
+    <th style="padding:0 15px 0 15px;">Zip Code</th>
+    <th style="padding:0 15px 0 15px;">Show Up</th>
+    <th style="padding:0 15px 0 15px;">Tester</th>
+    <th style="padding:0 15px 0 15px;">Comment</th>
+  </tr>
+  
+  <% @events.each_with_index do |event, index| %>
+  <tr>
+  <%= form_for(event.reservation) do |f| %>
+    <td style="padding:0 15px 0 15px;"><%= index + 1 %></td>
+    <td style="padding:0 15px 0 15px;"><%= event.title %></td>
+    <td style="padding:0 15px 0 15px;"><%= event.reservation.first_name %> <%= event.reservation.last_name %></td>
+    <td style="padding:0 15px 0 15px;"><%= event.start_time %></td>
+    <td style="padding:0 15px 0 15px;"><%= event.end_time %></td>
+    <td style="padding:0 15px 0 15px;"><%= event.reservation.email %></td>
+    <td style="padding:0 15px 0 15px;"><%= event.reservation.phone_number %></td>
+    <td style="padding:0 15px 0 15px;"><%= event.reservation.zip_code %></td>
+    <td style="padding:0 15px 0 15px;"><%= f.check_box :showup %></td>
+    <td style="padding:0 15px 0 15px;"><%= f.text_field :tester %></td>
+    <td style="padding:0 15px 0 15px;"><%= f.text_field :comment %></td>
+    <td><%= f.submit 'Save' %></td>
+  <% end %>
+  </tr>
+  <% end %>
+</table>
+</center>

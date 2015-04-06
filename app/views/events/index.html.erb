@@ -70,7 +70,7 @@
           right: 'month,agendaWeek,agendaDay'
         },
         selectable: true,
-        defaultView: "month",
+        defaultView: "agendaWeek",
         minTime: "09:00:00",
         maxTime: "20:00:00",
         timeFormat: 'h:mm A',
@@ -128,6 +128,7 @@
             sideBySide: true  
           });
           $('#datetimepicker7').datetimepicker({
+            minDate: default_start,
             defaultDate: default_end,
             format: 'YYYY - MM - DD HH:mm',
             sideBySide: true  

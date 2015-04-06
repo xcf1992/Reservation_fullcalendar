@@ -23,7 +23,7 @@ class EventsController < ApplicationController
   end
 
   def clients
-    @events = Event.where(:occupied => true).where('events.start_time > ?', DateTime.now.beginning_of_day)
+    @events = Event.where(:occupied => true).where('events.start_time > ?', DateTime.now.beginning_of_day).where('events.start_time < ?', DateTime.now.end_of_day)
   end
 
   # GET /events/new
@@ -139,31 +139,6 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
-    @event = Event.find_by_id(params[:event][:id])
-    if params[:event][:commit_button] == "Update All Occurrence"
-      @events = @event.event_series.events
-      @event.update_events(@events, event_params)
-    
-    elsif params[:event][:commit_button] == "Update All Following Occurrence"
-      @events = @event.event_series.events.find(:all, :conditions => ["start_time > '#{@event.start_time.to_formatted_s(:db)}' "])
-      @event.update_events(@events, event_params)
-    
-    else
-      @event.attributes = event_params
-      @event.save
-    end
-    
-    render :nothing => true
-
-    #respond_to do |format|
-      #if @event.update(event_params)
-       # format.html { redirect_to @event }
-      #  format.json { render :show, status: :ok, location: @event }
-      #else
-       # format.html { render :edit }
-      #  format.json { render json: @event.errors, status: :unprocessable_entity }
-     # end
-    #end
   end
 
   def delete_all

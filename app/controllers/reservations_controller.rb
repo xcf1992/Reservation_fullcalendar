@@ -12,8 +12,9 @@ class ReservationsController < ApplicationController
  
   	if @reservation.save
       @reservation.event.update_attribute(:occupied, true)
+      UserMailer.reservation_email(@reservation).deliver_later
       redirect_to root_path,
-      notice: "Reserve Succeed!"
+      notice: "Reserve Succeed! Please check your email for confirmation!"
   	else 
   		render 'new'
   	end
@@ -47,8 +48,6 @@ class ReservationsController < ApplicationController
   			                                  :email, 
                                           :phone_number,
   			                                  :zip_code,
-                                          :start_time,
-                                          :end_time,
                                           :event_id)
     end
 end
