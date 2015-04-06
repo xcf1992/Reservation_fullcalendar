@@ -59,8 +59,8 @@ class EventsController < ApplicationController
         except_start = params[:event][:except_time_start]
         except_end = params[:event][:except_time_end]
 
-        except_from = DateTime.strptime(except_start, "%H:%M")
-        except_to = DateTime.strptime(except_end, "%H:%M")
+        except_from = DateTime.strptime(except_start, "%I:%M %p")
+        except_to = DateTime.strptime(except_end, "%I:%M %p")
       end
 
       start_time_str = params[:start_time]
