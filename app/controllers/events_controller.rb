@@ -64,14 +64,14 @@ class EventsController < ApplicationController
       end
 
       start_time_str = params[:start_time]
-      start_time = DateTime.strptime(start_time_str, "%Y - %m - %d %H:%M")
+      start_time = DateTime.strptime(start_time_str, "%Y - %m - %d %I:%M %p")
       start_hour_minute = start_time.strftime("%H:%M")
       start_date = start_time.strftime("%Y - %m - %d")
-      end_hour_minute = DateTime.strptime(params[:end_time], "%Y - %m - %d %H:%M").strftime("%H:%M")
+      end_hour_minute = DateTime.strptime(params[:end_time], "%Y - %m - %d %I:%M %p").strftime("%H:%M")
 
       if (replication == "No Replication")
         stop_time_str = params[:end_time]
-        stop_time = DateTime.strptime(stop_time_str, "%Y - %m - %d %H:%M")
+        stop_time = DateTime.strptime(stop_time_str, "%Y - %m - %d %I:%M %p")
       else
         stop_time_str = params[:event][:stop_time] + " " + end_hour_minute
         stop_time = DateTime.strptime(stop_time_str, "%Y - %m - %d %H:%M")
@@ -89,7 +89,7 @@ class EventsController < ApplicationController
         to = eight_oclock_pm
       end
 
-      nst = DateTime.strptime(start_time_str, "%Y - %m - %d %H:%M")
+      nst = DateTime.strptime(start_time_str, "%Y - %m - %d %I:%M %p")
       net = nst + 30.minutes
 
       caliberate = 0

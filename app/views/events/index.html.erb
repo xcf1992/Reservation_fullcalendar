@@ -100,19 +100,19 @@
           
           if (view.name == "month") {
             start.hour(9);
-            start_time = moment(start).format("YYYY - MM - DD HH:mm");
+            start_time = moment(start).format("YYYY - MM - DD hh:mm A");
 
             end.dayOfYear(end.dayOfYear() - 1)
             end.hour(20);
-            end_time = moment(end).format("YYYY - MM - DD HH:mm");
+            end_time = moment(end).format("YYYY - MM - DD hh:mm A");
           }
           else {
-            start_time = moment(start).format("YYYY - MM - DD HH:mm");
-            end_time = moment(end).format("YYYY - MM - DD HH:mm");
+            start_time = moment(start).format("YYYY - MM - DD hh:mm A");
+            end_time = moment(end).format("YYYY - MM - DD hh:mm A");
           }
 
-          default_start = moment(start_time, "YYYY - MM - DD HH:mm");
-          default_end = moment(end_time, "YYYY - MM - DD HH:mm");
+          default_start = moment(start_time, "YYYY - MM - DD hh:mm A");
+          default_end = moment(end_time, "YYYY - MM - DD hh:mm A");
 
           $('#datetimepicker4').datetimepicker({
             format: 'hh:mm A',
@@ -124,13 +124,13 @@
           });
           $('#datetimepicker6').datetimepicker({
             defaultDate: default_start,
-            format: 'YYYY - MM - DD HH:mm',
+            format: 'YYYY - MM - DD hh:mm A',
             sideBySide: true  
           });
           $('#datetimepicker7').datetimepicker({
             minDate: default_start,
             defaultDate: default_end,
-            format: 'YYYY - MM - DD HH:mm',
+            format: 'YYYY - MM - DD hh:mm A',
             sideBySide: true  
           });
 
