@@ -16,8 +16,7 @@
   </tr>
   
   <% @events.each_with_index do |event, index| %>
-  <tr>
-  <%= form_for(event.reservation) do |f| %>
+  <tr data-id=<%= event.id%>>
     <td style="padding:0 15px 0 15px;"><%= index + 1 %></td>
     <td style="padding:0 15px 0 15px;"><%= event.title %></td>
     <td style="padding:0 15px 0 15px;"><%= event.reservation.first_name %> <%= event.reservation.last_name %></td>
@@ -26,12 +25,13 @@
     <td style="padding:0 15px 0 15px;"><%= event.reservation.email %></td>
     <td style="padding:0 15px 0 15px;"><%= event.reservation.phone_number %></td>
     <td style="padding:0 15px 0 15px;"><%= event.reservation.zip_code %></td>
-    <td style="padding:0 15px 0 15px;"><%= f.check_box :showup %></td>
-    <td style="padding:0 15px 0 15px;"><%= f.text_field :tester %></td>
-    <td style="padding:0 15px 0 15px;"><%= f.text_field :comment %></td>
-    <td><%= f.submit 'Save' %></td>
-  <% end %>
+    <td style="padding:0 15px 0 15px;"><%= event.reservation.showup %></td>
+    <td style="padding:0 15px 0 15px;"><%= event.reservation.tester %></td>
+    <td style="padding:0 15px 0 15px;"><%= event.reservation.comment %></td>
+    <td style="padding:0 15px 0 15px;"><%= link_to "Edit", edit_reservation_path(event.reservation), remote: true %></td>
   </tr>
   <% end %>
 </table>
 </center>
+
+<div id="editModal" class="modal fade" tabindex='-1'></div>

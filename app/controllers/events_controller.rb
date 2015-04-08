@@ -85,7 +85,8 @@ class EventsController < ApplicationController
       if from < nine_oclock_am
         from = nine_oclock_am
       end
-      if to > eight_oclock_pm
+      if to > eight_oclock_pm 
+        
         to = eight_oclock_pm
       end
 

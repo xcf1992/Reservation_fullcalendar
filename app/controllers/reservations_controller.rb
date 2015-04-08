@@ -7,12 +7,23 @@ class ReservationsController < ApplicationController
     @reservations = Reservation.all
 	end
 
+  def edit
+    @reservation = Reservation.find(params[:id])
+  end
+
+  def update
+    @reservation = Reservation.find(params[:id])
+
+    if @reservation.update(reservation_params)
+      redirect_to clients_events_path
+    end
+  end
+
 	def create
   	@reservation = Reservation.new(reservation_params)
  
   	if @reservation.save
       @reservation.event.update_attribute(:occupied, true)
-      UserMailer.reservation_email(@reservation).deliver_later
       redirect_to root_path,
       notice: "Reserve Succeed! Please check your email for confirmation!"
   	else 
@@ -48,6 +59,8 @@ class ReservationsController < ApplicationController
   			                                  :email, 
                                           :phone_number,
   			                                  :zip_code,
-                                          :event_id)
+                                          :showup,
+                                          :comment,
+                                          :tester)
     end
 end

@@ -1,0 +1,5 @@
+$("#editModal").html("<%= escape_javascript(render 'edit') %>")
+$("#editModal").modal("show")
+$('#editModal').on('hidden.bs.modal', function(){
+  $(this).find('form')[0].reset();
+});

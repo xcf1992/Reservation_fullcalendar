@@ -123,13 +123,13 @@
             defaultDate:thirteen_oclock
           });
           $('#datetimepicker6').datetimepicker({
-            defaultDate: default_start,
+            date: default_start,
             format: 'YYYY - MM - DD hh:mm A',
             sideBySide: true  
           });
           $('#datetimepicker7').datetimepicker({
             minDate: default_start,
-            defaultDate: default_end,
+            date: default_end,
             format: 'YYYY - MM - DD hh:mm A',
             sideBySide: true  
           });
@@ -140,19 +140,11 @@
               $('#except_time').hide();
               validator.resetForm();
            });
-          $('#eventCalModal').on('show.bs.modal', function(){
-              $('#eventCalModal #datetimepicker4').val(moment(twelve_oclock).format('hh:mm A'));
-              $('#eventCalModal #datetimepicker5').val(moment(thirteen_oclock).format('hh:mm A'));
-
-              $('#eventCalModal #datetimepicker6').val(start_time);
-              $('#eventCalModal #datetimepicker7').val(end_time);
-           });
 
           $('#eventCalModal #event_occupied').val(false);
           $('#eventCalModal #event_title').val("STD/HIV Test");
           $('#eventCalModal #event_description').val("Anything You Want To Put Here");
-          $('#eventCalModal #datetimepicker4').val(moment(twelve_oclock).format('hh:mm A'));
-          $('#eventCalModal #datetimepicker5').val(moment(thirteen_oclock).format('hh:mm A'));
+
           $('#eventCalModal #start_time').val(start_time);
           $('#eventCalModal #end_time').val(end_time);
         },

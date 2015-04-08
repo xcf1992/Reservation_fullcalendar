@@ -1,0 +1,29 @@
+<%= form_for @reservation, :html => {:class => "form-horizontal center"} do |f| %>
+  <div id="modalBody" class="modal-body">
+
+  	  <div class="form-group">
+        <%=f.label :showup, "ShowUp:", class: "col-md-4 control-label"%>
+        <div class="col-md-8">
+          <%=f.check_box :showup %>
+        </div>
+      </div>
+      
+      <div class="form-group">
+          <%= f.label :tester, "Tester:", class: "col-md-4 control-label" %>
+          <div class="col-md-8">
+              <%= f.text_field :tester, class: "form-control" %>
+          </div>
+      </div>
+
+      <div class="form-group">
+          <%= f.label :comment, "Comment:", class: "col-md-4 control-label" %>
+          <div class="col-md-8">
+              <%= f.text_field :comment, class: "form-control" %>
+          </div>
+      </div>
+      
+  <div class="modal-footer">
+      <%= f.submit 'Save', :class => 'btn btn-primary' %>
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+  </div>
+<% end %>
