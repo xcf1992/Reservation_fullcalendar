@@ -147,6 +147,10 @@
 
           $('#eventCalModal #start_time').val(start_time);
           $('#eventCalModal #end_time').val(end_time);
+          $('#datetimepicker4').data("DateTimePicker").date(twelve_oclock);
+          $('#datetimepicker5').data("DateTimePicker").date(thirteen_oclock);
+          $('#datetimepicker6').data("DateTimePicker").date(start_time);
+          $('#datetimepicker7').data("DateTimePicker").date(end_time);
         },
 
         eventClick: function(event, jsEvent, view) {

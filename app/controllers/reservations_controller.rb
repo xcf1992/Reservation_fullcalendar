@@ -59,6 +59,7 @@ class ReservationsController < ApplicationController
   			                                  :email, 
                                           :phone_number,
   			                                  :zip_code,
+                                          :event_id,
                                           :showup,
                                           :comment,
                                           :tester)
