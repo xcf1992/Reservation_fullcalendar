@@ -42,7 +42,7 @@ class EventsController < ApplicationController
     if params[:event][:repeat] == "Does not repeat"
       @event = Event.new(event_params)
       if @event.save
-          redirect_to '/events'
+          redirect_to events_path
           #format.html { redirect_to @event, notice: 'Event was successfully created.' }
           #format.json { render :show, status: :created, location: @event }
       else
@@ -132,7 +132,7 @@ class EventsController < ApplicationController
         end
         net = nst + 30.minutes
       end
-      redirect_to '/events'
+      redirect_to events_path
     end
 
   end
@@ -150,7 +150,7 @@ class EventsController < ApplicationController
     delete_time_end = DateTime.strptime(dl_time_end, "%Y - %m - %d")
 
     @events = Event.where('events.start_time < ?', delete_time_end.end_of_day).where('events.start_time > ?', delete_time_start.beginning_of_day).destroy_all
-    redirect_to '/events'
+    redirect_to events_path
   end
   # DELETE /events/1
   # DELETE /events/1.json
