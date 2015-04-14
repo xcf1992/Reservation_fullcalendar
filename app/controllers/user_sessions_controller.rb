@@ -7,7 +7,7 @@ class UserSessionsController < ApplicationController
 
   def create
   	if @user = login(params[:email], params[:password])
-      redirect_to '/events'
+      redirect_to events_path
     else
       redirect_to(root_path, notice: 'Login failed!')
     end
