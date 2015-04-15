@@ -87,11 +87,11 @@ $(document).ready(function() {
         height: 1090,
         eventSources: [
             {
-                url: '/events/available.json'
+                url: "<%= available_events_path %>"
             },
 
             {
-                url: '/events/occupied.json',
+                url: "<%= occupied_events_path %>",
                 color: 'gray'
             }
         ],
