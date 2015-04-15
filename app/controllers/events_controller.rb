@@ -39,8 +39,14 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
+    title = params[:event][:title]
+    desc = params[:event][:description]
+    start_time_str = params[:start_time]
+    start_time = DateTime.strptime(start_time_str, "%Y - %m - %d %I:%M %p")
+    end_time_str = params[:end_time]
+    endT = DateTime.strptime(end_time_str, "%Y - %m - %d %I:%M %p")
     if params[:event][:repeat] == "Does not repeat"
-      @event = Event.new(event_params)
+      @event = Event.new(:title => title, :description => desc, :start_time => start_time, :end_time => endT, :occupied => false)
       if @event.save
           redirect_to events_path
           #format.html { redirect_to @event, notice: 'Event was successfully created.' }
@@ -50,8 +56,6 @@ class EventsController < ApplicationController
       end
 
     else
-      title = params[:event][:title]
-      desc = params[:event][:description]
       exception = params[:event][:exception]
       replication = params[:event][:replicate]
 
@@ -63,8 +67,7 @@ class EventsController < ApplicationController
         except_to = DateTime.strptime(except_end, "%I:%M %p")
       end
 
-      start_time_str = params[:start_time]
-      start_time = DateTime.strptime(start_time_str, "%Y - %m - %d %I:%M %p")
+      
       start_hour_minute = start_time.strftime("%H:%M")
       start_date = start_time.strftime("%Y - %m - %d")
       end_hour_minute = DateTime.strptime(params[:end_time], "%Y - %m - %d %I:%M %p").strftime("%H:%M")
