@@ -21,7 +21,15 @@ class ReservationsController < ApplicationController
 
 	def create
   	@reservation = Reservation.new(reservation_params)
- 
+    @existing_events = Event.where(:occupied => true).where('events.start_time > ?', DateTime.now.beginning_of_day).where('events.start_time < ?', DateTime.now.end_of_day)
+    
+    for event in @existing_events
+      if event.reservation.email === @reservation.email
+        redirect_to root_path,
+        notice: "Reserve Failed! Please don't make multiple reservations on the same day!"
+      end and return
+    end
+
   	if @reservation.save
       UserMailer.confirmation_email(@reservation).deliver_now
       @reservation.event.update_attribute(:occupied, true)

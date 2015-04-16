@@ -8,7 +8,7 @@
     <p>
     Your scheduled appointment time is:<br>
       
-       <%= @event.start_time %>
+       <%= @event.start_time.to_s(:full_time) %>
     </p>
     <p>
        Once again, our address is at 3830 Park Blvd. It's in the Egyptian at the the Corner of Park & University.
