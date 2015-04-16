@@ -23,6 +23,7 @@ class ReservationsController < ApplicationController
   	@reservation = Reservation.new(reservation_params)
  
   	if @reservation.save
+      UserMailer.confirmation_email(@reservation).deliver_now
       @reservation.event.update_attribute(:occupied, true)
       redirect_to root_path,
       notice: "Reserve Succeed! Please check your email for confirmation!"

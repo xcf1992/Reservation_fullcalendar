@@ -1,7 +1,7 @@
 class UserMailer < ApplicationMailer
-  default from: 'DoNotReply@gmail.com'
+  default from: 'notification@leadtheway.com'
  
-  def reservation_email(reservation)
+  def confirmation_email(reservation)
     @user = reservation
     @event = @user.event
     mail(to: @user.email, subject: 'Lead the Way Appointment Confirmation')
