@@ -19,6 +19,10 @@
 </center>
 <script>
 $(document).ready(function() {
+    /*$('#xcfbutton').on('click', {code: "BootstrapDialog.alert('I want banana!');"}, function(event){
+               eval(event.data.code);
+            });
+    */
     var validator = $("#new_reservation").validate({
         submitHandler: function(form) {
             $("#fullCalModal").modal('hide');
@@ -125,7 +129,6 @@ $(document).ready(function() {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
                 <h4 id="myModalLabel">Log In</h4>
             </div>
 
@@ -142,7 +145,7 @@ $(document).ready(function() {
               </div>
               
               <div class="modal-footer">
-                <%= submit_tag "Login", class: "btn btn-large btn-primary" %>
+                <%= submit_tag "Login", class: "btn btn-large btn-primary", id: "xcfbutton"%>
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
               </div>
 
@@ -155,7 +158,6 @@ $(document).ready(function() {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
                 <h4 id="modalTitle" class="modal-title"></h4>
             </div>
 
