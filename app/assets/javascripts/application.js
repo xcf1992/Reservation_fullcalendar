@@ -64,6 +64,7 @@ $(function(){
             title: 'Confirm',
             message: link.attr('data-confirm'),
             buttons: [{
+                id: 'btn1',
                 label: 'Accept',
                 cssClass: 'btn-primary',
                 action: function(dialogRef){
@@ -83,5 +84,4 @@ $(function(){
  
   //Other global javascript stuffs
   //...
- 
 });
