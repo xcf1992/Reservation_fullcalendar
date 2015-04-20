@@ -39,23 +39,22 @@
           }
       })
     });
-
+    
     $('#submitButton').on('click', function() {
-      console.log("adsfasdf");
       $('#eventCalModal').modal('hide');
       $('#loadModal').modal({
         backdrop: 'static',
         keyboard: false
       });
-      console.log("adsfasdf3");
+      
       $.ajax ({
-          url: "/events/create",
+          url: "/events",
           type: "POST",
           data: { 
             "event[title]": $("#event_title").val(),
             "event[description]": $("#event_description").val(),
             start_time: $("#start_time").val(),
-            end_time: $("#start_time").val(),
+            end_time: $("#end_time").val(),
             "event[exception]": $("#event_exception").val(),
             "event[except_time_start]": $("#datetimepicker4").val(),
             "event[except_time_end]": $("#datetimepicker5").val(),
@@ -66,11 +65,10 @@
           },
 
           success: function() {
-            console.log("adsfasdf2");
-            $('#loadModal').modal('hide');
             location.reload();
           }
       })
+      return false;
     });
 
     var dateNow = new Date();
