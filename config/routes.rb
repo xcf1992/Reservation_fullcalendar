@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :pages
+
   root 'appointment_info#index'
 
   get 'user_sessions/new'
