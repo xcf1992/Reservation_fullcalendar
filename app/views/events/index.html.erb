@@ -31,12 +31,43 @@
           type: "POST",
           data: { 
             delete_time_start: $("#delete_time_start").val(), 
-            delete_time_end: $("#delete_time_end").val()
+            delete_time_end  : $("#delete_time_end").val()
           },
 
           success: function() {
+            location.reload();
+          }
+      })
+    });
+
+    $('#submitButton').on('click', function() {
+      console.log("adsfasdf");
+      $('#eventCalModal').modal('hide');
+      $('#loadModal').modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+      console.log("adsfasdf3");
+      $.ajax ({
+          url: "/events/create",
+          type: "POST",
+          data: { 
+            "event[title]": $("#event_title").val(),
+            "event[description]": $("#event_description").val(),
+            start_time: $("#start_time").val(),
+            end_time: $("#start_time").val(),
+            "event[exception]": $("#event_exception").val(),
+            "event[except_time_start]": $("#datetimepicker4").val(),
+            "event[except_time_end]": $("#datetimepicker5").val(),
+            "event[repeat]": $("#event_repeat").val(),
+            "event[replicate]": $("#event_replicate").val(),
+            "event[stop_time]": $("#event_stop_time").val(),
+            "event[occupied]": $('#event_occupied').val()
+          },
+
+          success: function() {
+            console.log("adsfasdf2");
             $('#loadModal').modal('hide');
-            console.log("adfasdf");
             location.reload();
           }
       })
@@ -272,7 +303,7 @@
             </div>
 
             <center><h2>New Event</h2></center>
-            <%= form_for @eventN, :html => {:class => "form-horizontal center"} do |f| %>
+            <%= form_for @eventN, :id => "eventForm", :html => {:class => "form-horizontal center"} do |f| %>
               <div id="modalBody" class="modal-body">
                   
                   <div class="form-group">
@@ -357,7 +388,7 @@
                   </div>
               </div>
               <div class="modal-footer">
-                  <%= f.submit 'Create', :class => 'btn btn-primary', :id => 'submitButton', :data => {:disable_with => "Saving..."} %>
+                  <%= f.submit 'Create', :class => 'btn btn-primary', :id => 'submitButton' %>
                   <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
               </div>
             <% end %>   
