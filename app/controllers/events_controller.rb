@@ -179,7 +179,7 @@ class EventsController < ApplicationController
   end
 
   def reservation_info
-    @event = Event.find params[:id]
+    @event = Event.find(params[:id])
     @reservation = @event.reservation
 
     respond_to do |format|
@@ -188,7 +188,7 @@ class EventsController < ApplicationController
   end
 
   def reservation_without_info
-    @event = Event.find params[:id]
+    @event = Event.find(params[:id])
 
     respond_to do |format|
       format.html { render :layout => false}
