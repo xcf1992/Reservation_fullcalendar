@@ -8,9 +8,12 @@
 @import 'bootstrap';
 @import 'bootstrap-datetimepicker';
 
+.fc-event {
+  font-size: x-small;
+}
+
 .fc{
-	width: 60%;
-  height: 50%;
+	width: 80%;
 }
 
 #datetimepicker4, #datetimepicker5 {
@@ -20,7 +23,7 @@
 
 #inform {
 	text-align: left;
-	width:60%;
+	width:80%;
 }
 
 #title {
