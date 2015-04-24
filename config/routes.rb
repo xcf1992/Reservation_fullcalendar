@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :tests
+
   resources :pages
 
   root 'appointment_info#index'

@@ -44,6 +44,8 @@ gem "cancan"
 gem 'sorcery'
 
 gem "mail"
+
+gem 'ruby-hl7'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
