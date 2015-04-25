@@ -2,12 +2,12 @@
 <div id="nav">
 <% if current_user %>
   <%= link_to "Home", root_path %> | 
-  <%= link_to "Register", new_user_path %> | 
-  <%= link_to "Edit Profile", edit_user_path(current_user.id) %> | 
   <%= link_to "Today Clients", clients_events_path %> | 
   <%= link_to "All Data", rails_admin_path %> | 
   <%= link_to "Delete Events", "#deleteModal", "data-toggle" => "modal" %> | 
   <%= link_to "Test Results", tests_path %> | 
+  <%= link_to "Edit Profile", edit_user_path(current_user.id), remote: true %> | 
+  <%= link_to "Register new admin user", "#registerModal", "data-toggle" => "modal" %> | 
   <%= link_to "Log out", :logout, method: :post %>
 <% end %>
 </div>
@@ -17,10 +17,55 @@
 <p style="display: inline-block; color: #ffffff; background-color: gray">Unavailable Time Slots</p>
 <div id='calendarEvents'></div>
 </center>
+<div id="profileModal" class="modal fade" tabindex='-1'></div>
 
 <script>
-
   $(document).ready(function() {
+    var validator = $("#new_user").validate({
+        onfocusout: false,
+        onkeyup: false,
+        onclick: false,
+        submitHandler: function(form) {
+            $("#registerModal").modal('hide');
+            return true;
+        },
+
+        rules: {
+            "user[email]": {
+                required: true,
+                email: true
+            },
+            "user[password]": {
+                required: true,
+                minlength: 5
+            },
+            "user[password_confirmation]": {
+                required: true,
+                minlength: 5,
+                equalTo: "#user_password"
+            }
+        },
+
+        messages: {
+            "user[email]": {
+                required: "Please enter your email address",
+                email: "You have entered an invalid email address. Please try again."
+            },
+            "user[password]": {
+                required: "Please enter your password",
+                minlength: "Password should be longer than 5 digits",
+            },
+            "user[password_confirmation]": {
+                required: "Please re-enter your password",
+                equalTo: "Password does not match"
+            }
+        }
+    });
+    $('#registerModal').on('hidden.bs.modal', function(){
+        $(this).find('form')[0].reset();
+        $('#registerModal .error').remove();
+    });
+
     $('#deleteForm').submit(function() {
       $('#deleteModal').modal('hide');
       $('#loadModal').modal({
@@ -246,6 +291,48 @@
 
 <div id="reservation_modal_container"></div>
 <div id="reservation_modal_container2"></div>
+
+<div id="registerModal" class="modal fade" tabindex='-1'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="myModalLabel">New User</h4>
+            </div>
+
+            <%= form_for @user, :html => {:class => "form-horizontal center"} do |f| %>
+              <div id="modalBody" class="modal-body">
+                <div class="form-group">
+                  <%= f.label :email, class: "col-md-4 control-label" %>
+                  <div class="col-md-8">
+                      <%= f.text_field :email, class: "form-control" %>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :password, class: "col-md-4 control-label" %>
+                  <div class="col-md-8">
+                      <%= f.password_field :password, class: "form-control" %>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :password_confirmation, class: "col-md-4 control-label" %>
+                  <div class="col-md-8">
+                      <%= f.password_field :password_confirmation, class: "form-control" %>
+                  </div>
+                </div>
+                    
+              </div>
+              
+              <div class="modal-footer">
+                  <%= f.submit 'Register', :class => 'btn btn-primary' %>
+                  <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+              </div>
+
+            <% end %>
+        </div>
+    </div>
+</div>
 
 <div id="loadModal" class="modal fade" tabindex='-1'>
     <div class="modal-dialog">

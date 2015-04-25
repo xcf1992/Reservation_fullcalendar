@@ -1,32 +1,30 @@
-<%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= form_for @user, :html => {:class => "form-horizontal center", :id => "profileForm"} do |f| %>
+  <div id="modalBody" class="modal-body">
+    <div class="form-group">
+      <%= f.label :email, class: "col-md-4 control-label" %>
+      <div class="col-md-8">
+          <%= f.text_field :email, class: "form-control" %>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
+    <div class="form-group">
+      <%= f.label :password, "New Password", class: "col-md-4 control-label" %>
+      <div class="col-md-8">
+          <%= f.password_field :password, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation, "Password Confirmation", class: "col-md-4 control-label" %>
+      <div class="col-md-8">
+          <%= f.password_field :password_confirmation, class: "form-control" %>
+      </div>
+    </div>
+        
   </div>
   
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %>
-  </div>
-  
-  <div class="actions">
-    <%= f.submit %>
+  <div class="modal-footer">
+      <%= f.submit 'Save', :class => 'btn btn-primary' %>
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
   </div>
 <% end %>

@@ -1,0 +1,47 @@
+$("#profileModal").html("<%= escape_javascript(render 'edit') %>")
+
+$("#profileModal").modal("show")
+
+$('#profileModal').on('hidden.bs.modal', function(){
+  $(this).find('form')[0].reset();
+  $('#profileModal .error').remove();
+});
+
+var validator = $("#profileForm").validate({
+    onfocusout: false,
+    onkeyup: false,
+    onclick: false,
+    submitHandler: function(form) {
+        $("#profileModal").modal('hide');
+        return true;
+    },
+
+    rules: {
+        "user[email]": {
+            required: true
+        },
+        "user[password]": {
+            required: true,
+            minlength: 5
+        },
+        "user[password_confirmation]": {
+            required: true,
+            minlength: 5,
+            equalTo: "#user_password"
+        }
+    },
+
+    messages: {
+        "user[email]": {
+            required: "Please enter your email address"
+        },
+        "user[password]": {
+            required: "Please enter your password",
+            minlength: "Password should be longer than 5 digits",
+        },
+        "user[password_confirmation]": {
+            required: "Please re-enter your password",
+            equalTo: "Password does not match"
+        }
+    }
+});

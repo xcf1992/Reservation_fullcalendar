@@ -15,6 +15,7 @@ class EventsController < ApplicationController
   def index
     @eventN = Event.new(:repeat => "Does not repeat")
     @event = Event.find_by_id(params[:id])
+    @user = User.new
   end
 
   # GET /events/1

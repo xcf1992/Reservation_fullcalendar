@@ -81,7 +81,4 @@ $(function(){
         });
         return false; // always stops the action since code runs asynchronously
     };
- 
-  //Other global javascript stuffs
-  //...
 });

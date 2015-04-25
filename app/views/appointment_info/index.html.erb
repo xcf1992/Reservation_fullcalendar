@@ -1,4 +1,15 @@
 <center>
+<h1 id="title" >Available Appointments</h1>
+
+<div id="inform">
+    <h4><%= @page.description %></h4>
+</div>
+
+<p style="display: inline-block; color: #ffffff; background-color: DodgerBlue">Available Time Slots</p>
+<p style="display: inline-block; color: #ffffff; background-color: gray">Unavailable Time Slots</p>
+
+<div id='calendar'></div>
+
 <div id="nav">
 <% if current_user %>
   <%= link_to "Administrator", events_path %> |
@@ -8,14 +19,6 @@
   <%= link_to "Login", "#loginModal", "data-toggle" => "modal" %>
 <% end %>
 </div>
-
-<h1 id="title" >Available Appointments</h1>
-    <div id="inform">
-        <h4><%= @page.description %></h4>
-    </div>
-    <p style="display: inline-block; color: #ffffff; background-color: DodgerBlue">Available Time Slots</p>
-    <p style="display: inline-block; color: #ffffff; background-color: gray">Unavailable Time Slots</p>
-<div id='calendar'></div>
 </center>
 
 <script>
