@@ -136,7 +136,8 @@ class EventsController < ApplicationController
         end
         net = nst + 30.minutes
       end
-      redirect_to events_path
+
+      redirect_to events_path, notice: 'Events have been created successfully.'
     end
 
   end
@@ -154,7 +155,7 @@ class EventsController < ApplicationController
     delete_time_end = DateTime.strptime(dl_time_end, "%Y - %m - %d")
 
     @events = Event.where('events.start_time < ?', delete_time_end.end_of_day).where('events.start_time > ?', delete_time_start.beginning_of_day).destroy_all
-    redirect_to events_path
+    redirect_to events_path, notice: 'Events have been deleted successfully.'
   end
   # DELETE /events/1
   # DELETE /events/1.json

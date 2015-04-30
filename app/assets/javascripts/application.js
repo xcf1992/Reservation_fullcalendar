@@ -82,3 +82,15 @@ $(function(){
         return false; // always stops the action since code runs asynchronously
     };
 });
+
+$(function() {
+  $('.alert_messages').on('click', '.dismiss', function() {
+    $('.message', '#message_drawer').remove();
+  });
+
+  if($('#message_drawer').find('.message').size() > 0) {
+    setTimeout(function() {
+      $('#message_drawer').fadeOut();
+    }, 6000);
+  };
+});

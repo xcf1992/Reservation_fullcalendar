@@ -8,9 +8,15 @@
 </head>
 <body>
 
-<div>
-  <p id="notice"><%= flash[:notice] %></p>
-  <p id="alert"><%= flash[:alert] %></p>
+<div class="alert-messages alert_messages" id="message_drawer">
+  <% flash.each do |key, value| %>
+    <div class="message">
+      <div class="message-inside">
+        <span class="message-text"><%= value %></span>
+        <a class='dismiss' href='javascript:;'>×</a>
+      </div>
+    </div>
+  <% end %>
 </div>
 
 <%= yield %>

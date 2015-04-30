@@ -82,19 +82,10 @@
 
         success: function() {
           $('#loadModal').modal('hide');
-          //$('#noticeModal').modal();
-          //location.reload();
+          location.reload();
         }
       });
       return false;
-    });
-    $('#loadModal').on('hidden.bs.modal', function() {
-      console.log("loadModal hide");
-      $('#noticeModal').modal();
-    });
-    $('#noticeModal').on('hidden.bs.modal', function() {
-      console.log("noticeModal hide");
-      location.reload();
     });
     
     $('#submitButton').on('click', function() {
@@ -121,8 +112,8 @@
             "event[occupied]": $('#event_occupied').val()
           },
           success: function() {
-            //location.reload();
             $('#loadModal').modal('hide');
+            location.reload();
           }
       });
       return false;
@@ -350,19 +341,6 @@
         <div class="modal-content">
             <div class="modal-header" id="loadHeader">
               <h3><span class='spinner'></span>    Loading, Please Wait...</h3>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="noticeModal" class="modal fade" tabindex='-1'>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" id="loadHeader">
-              <h3>Notice Here!</h3>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-large btn-primary" data-dismiss="modal" aria-hidden="true">Ok</button>
             </div>
         </div>
     </div>

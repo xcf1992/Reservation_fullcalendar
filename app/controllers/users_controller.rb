@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to events_path, notice: 'User was successfully created.'
+      redirect_to events_path, notice: 'New user has been created successfully.'
     else
       redirect_to events_path, notice: 'New user register failed.'
     end
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     if @user.update(user_params)
-      redirect_to events_path, notice: 'User was successfully updated.'
+      redirect_to events_path, notice: 'User profile has been updated successfully.'
     else
       redirect_to events_path, notice: 'User profile update failed.'
     end

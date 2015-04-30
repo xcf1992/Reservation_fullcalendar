@@ -18,7 +18,7 @@ class TestResultFilesController < ApplicationController
 		  	  end
 			end
 			
-			redirect_to tests_path, notice: 'File Upload Succeed.'
+			redirect_to tests_path, notice: 'File has been uploaded successfully.'
 		else
 			redirect_to tests_path, notice: 'File Upload failed.'
 		end
