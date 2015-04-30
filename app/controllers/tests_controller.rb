@@ -5,6 +5,7 @@ class TestsController < ApplicationController
   # GET /tests.json
   def index
     @tests = Test.all
+    @file = TestResultFile.new
   end
 
   # GET /tests/1
@@ -69,6 +70,6 @@ class TestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def test_params
-      params.require(:test).permit(:result)
+      params.require(:test).permit(:result, :testId)
     end
 end

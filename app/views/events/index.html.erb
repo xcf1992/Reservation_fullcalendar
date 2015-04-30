@@ -61,7 +61,7 @@
             }
         }
     });
-    $('#registerModal').on('hidden.bs.modal', function(){
+    $('#registerModal').on('hidden.bs.modal', function() {
         $(this).find('form')[0].reset();
         $('#registerModal .error').remove();
     });
@@ -81,10 +81,20 @@
         },
 
         success: function() {
-          location.reload();
+          $('#loadModal').modal('hide');
+          //$('#noticeModal').modal();
+          //location.reload();
         }
       });
       return false;
+    });
+    $('#loadModal').on('hidden.bs.modal', function() {
+      console.log("loadModal hide");
+      $('#noticeModal').modal();
+    });
+    $('#noticeModal').on('hidden.bs.modal', function() {
+      console.log("noticeModal hide");
+      location.reload();
     });
     
     $('#submitButton').on('click', function() {
@@ -111,7 +121,8 @@
             "event[occupied]": $('#event_occupied').val()
           },
           success: function() {
-            location.reload();
+            //location.reload();
+            $('#loadModal').modal('hide');
           }
       });
       return false;
@@ -344,6 +355,19 @@
     </div>
 </div>
 
+<div id="noticeModal" class="modal fade" tabindex='-1'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" id="loadHeader">
+              <h3>Notice Here!</h3>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-large btn-primary" data-dismiss="modal" aria-hidden="true">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="deleteModal" class="modal fade" tabindex='-1'>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -373,7 +397,7 @@
               
               <div class="modal-footer">
                 <%= submit_tag "Delete", :id => 'deleteButton', class: "btn btn-large btn-primary", data: { confirm: 'Are you sure?' } %>
-                <button id="deleteCancelBnt"class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button id="deleteCancelBnt" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
               </div>
 
             <% end %>

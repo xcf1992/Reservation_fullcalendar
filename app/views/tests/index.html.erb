@@ -1,27 +1,53 @@
-<p id="notice"><%= notice %></p>
+<%= link_to 'Back', events_path %> | 
+<%= link_to 'Upload Test Result',  "#uploadModal", "data-toggle" => "modal" %> | 
+<%= link_to 'View All Files'%>
 
-<h1>Listing Tests</h1>
-
-<table>
-  <thead>
+<center>
+  <h1>Test Result</h1>
+  <table>
     <tr>
-      <th>Result</th>
-      <th colspan="3"></th>
+      <th style="padding:0 60px 0 60px;">Id</th>
+      <th style="padding:0 60px 0 60px;">Test Result</th>
     </tr>
-  </thead>
 
-  <tbody>
-    <% @tests.each do |test| %>
-      <tr>
-        <td><%= test.result %></td>
-        <td><%= link_to 'Show', test %></td>
-        <td><%= link_to 'Edit', edit_test_path(test) %></td>
-        <td><%= link_to 'Destroy', test, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <% @tests.each_with_index do |t| %>
+	  <tr>
+	    <td style="padding:0 60px 0 60px;"><%= t.testId %></td>
+	    <td style="padding:0 60px 0 60px;"><%= t.result %></td>
+	  </tr>
+	<% end %>
+  </table>
+</center>
 
-<br>
+<div id="uploadModal" class="modal fade" tabindex='-1'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="myModalLabel">Upload New Test Result</h4>
+            </div>
+            <%= form_for @file, :html => {:class => "form-horizontal center"} do |f| %>
+              <div id="modalBody" class="modal-body">
+                <div class="form-group">
+                  <%= f.label :title, class: "col-md-4 control-label" %>
+                  <div class="col-md-8">
+                      <%= f.text_field :title, class: "form-control" %>
+                  </div>
+                </div>
 
-<%= link_to 'New Test', new_test_path %>
+                <div class="form-group">
+                  <%= f.label :result, "File", class: "col-md-4 control-label" %>
+                  <div class="col-md-8">
+                      <%= f.file_field :result %>
+                  </div>
+                </div>
+                    
+              </div>
+              
+              <div class="modal-footer">
+                  <%= f.submit 'Upload', :class => 'btn btn-primary' %>
+                  <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+              </div>
+            <% end %>
+        </div>
+    </div>
+</div>

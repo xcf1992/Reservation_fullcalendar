@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423233544) do
+ActiveRecord::Schema.define(version: 20150429214458) do
 
   create_table "events", force: :cascade do |t|
     t.string   "title"
@@ -45,10 +45,21 @@ ActiveRecord::Schema.define(version: 20150423233544) do
     t.string   "comment"
   end
 
+  create_table "test_result_files", force: :cascade do |t|
+    t.string   "title"
+    t.string   "result_file_name"
+    t.string   "result_content_type"
+    t.integer  "result_file_size"
+    t.datetime "result_updated_at"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
   create_table "tests", force: :cascade do |t|
     t.string   "result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "testId"
   end
 
   create_table "users", force: :cascade do |t|

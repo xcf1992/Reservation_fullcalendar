@@ -8,6 +8,8 @@ gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
+gem 'smarter_csv', '~> 1.0.19'
+
 gem 'bootstrap-sass', '~> 3.3.3'
 
 gem 'autoprefixer-rails'
@@ -46,6 +48,8 @@ gem 'sorcery'
 gem "mail"
 
 gem 'ruby-hl7'
+
+gem "paperclip", "~> 4.2"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
