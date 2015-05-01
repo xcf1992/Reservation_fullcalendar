@@ -1,0 +1,18 @@
+<%= link_to 'Back', tests_path %>
+
+<center>
+  <h1>Test Result</h1>
+  <table>
+    <tr>
+      <th style="padding:0 30px 0 30px;">Test Result File</th>
+    </tr>
+
+    <% @files.each do |file| %>
+  	  <tr>
+  	    <td style="padding:0 30px 0 30px;"><%= file.result_file_name %></td>
+        <td style="padding:0 15px 0 15px;"><%= link_to "View", test_result_file_path(file.id) %></td>
+        <td><%= link_to 'Delete', file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  	  </tr>
+	  <% end %>
+  </table>
+</center>

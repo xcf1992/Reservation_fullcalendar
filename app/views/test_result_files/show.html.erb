@@ -1,0 +1,11 @@
+<% @results.each do |row| %>
+  <% if row[0] == [] %>
+    <h4><br></br></h4>
+  <% else %>
+    <h4><%= row.join(",") %></h4>
+  <% end %>
+  
+  <% if row == []%>
+    <h4><br></br></h4>
+  <% end %>
+<% end %>

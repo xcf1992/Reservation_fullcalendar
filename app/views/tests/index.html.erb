@@ -1,6 +1,6 @@
 <%= link_to 'Back', events_path %> | 
 <%= link_to 'Upload Test Result',  "#uploadModal", "data-toggle" => "modal" %> | 
-<%= link_to 'View All Files'%>
+<%= link_to 'View All Files', test_result_files_path %>
 
 <center>
   <h1>Test Result</h1>
@@ -27,13 +27,6 @@
             </div>
             <%= form_for @file, :html => {:class => "form-horizontal center"} do |f| %>
               <div id="modalBody" class="modal-body">
-                <div class="form-group">
-                  <%= f.label :title, class: "col-md-4 control-label" %>
-                  <div class="col-md-8">
-                      <%= f.text_field :title, class: "form-control" %>
-                  </div>
-                </div>
-
                 <div class="form-group">
                   <%= f.label :result, "File", class: "col-md-4 control-label" %>
                   <div class="col-md-8">
