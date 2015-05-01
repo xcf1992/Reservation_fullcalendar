@@ -57,6 +57,11 @@ class EventsController < ApplicationController
       end
 
     else
+      gap = 30.minutes
+      if params[:event][:repeat] == "Reapeat Every Hour"
+        gap = 1.hours
+      end
+
       exception = params[:event][:exception]
       replication = params[:event][:replicate]
 
@@ -95,7 +100,7 @@ class EventsController < ApplicationController
       end
 
       nst = DateTime.strptime(start_time_str, "%Y - %m - %d %I:%M %p")
-      net = nst + 30.minutes
+      net = nst + gap
 
       caliberate = 0
       
@@ -115,7 +120,7 @@ class EventsController < ApplicationController
               @newEvent2.save
             end
 
-            if nst_hour_minute >= except_from && nst_hour_minute < except_to && (nst_hour_minute + 30.minutes) > except_to
+            if nst_hour_minute >= except_from && nst_hour_minute < except_to && (nst_hour_minute + gap) > except_to
               caliberate = 1
             end
           else
@@ -131,10 +136,10 @@ class EventsController < ApplicationController
           caliberate = 0
         end
 
-        if nst.strftime("%k").to_i == 23 && (nst + 30.minutes).strftime("%k").to_i == 0
-          nst = (nst + 30.minutes).beginning_of_day
+        if nst.strftime("%k").to_i == 23 && (nst + gap).strftime("%k").to_i == 0
+          nst = (nst + gap).beginning_of_day
         end
-        net = nst + 30.minutes
+        net = nst + gap
       end
 
       redirect_to events_path, notice: 'Events have been created successfully.'

@@ -5,7 +5,8 @@ class Event < ActiveRecord::Base
     
     REPEATS = [
                "Does not repeat",
-               "Reapeat Every 30 Minutes"
+               "Reapeat Every 30 Minutes",
+               "Reapeat Every Hour"
     ]
 
     REPLICATES = [
