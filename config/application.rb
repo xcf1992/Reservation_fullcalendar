@@ -36,8 +36,8 @@ module Appointment
         domain: "example.com",
         authentication: "plain",
         enable_starttls_auto: true,
-        user_name: "avrccalendar@nadnet.ch",
-        password: "c@l4AVRC"
+        user_name:            "leadtheway.sandiego@gmail.com",
+        password:             "ltwsandiego"
       }
   end
 end
