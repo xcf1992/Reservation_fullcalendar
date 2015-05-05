@@ -10,8 +10,9 @@
 
 <div id="nav">
 <% if current_user %>
-  <%= link_to "Administrator", events_path %> |
-  <%= link_to "Edit Description", "#editDesModal", "data-toggle" => "modal" %> |
+  <%= link_to "Administrator", events_path %> | 
+  <%= link_to "Edit Description", "#editDesModal", "data-toggle" => "modal" %> | 
+  <%= link_to "Client Info", "#clientModal", "data-toggle" => "modal" %> | 
   <%= link_to "Log out", :logout, method: :post %>
 <% else %>
   <%= link_to "Login", "#loginModal", "data-toggle" => "modal" %>
@@ -76,6 +77,13 @@ $(document).ready(function() {
                 maxlenght: "You have entered an invalid zip code. Please provide the first 5 digits of your zip code."
             }
         }
+    });
+
+    $('#loginForm').on('submit', function() {
+        $('#loginModal').modal('hide');
+    });
+    $('#loginModal').on('hidden.bs.modal', function() {
+        location.reload();
     });
 
     $('#calendar').fullCalendar({
@@ -159,7 +167,7 @@ $(document).ready(function() {
                 <h4 id="myModalLabel">Log In</h4>
             </div>
 
-            <%= form_tag user_sessions_path, :method => :post do %>
+            <%= form_tag user_sessions_path, :method => :post, :target => "_blank", :id => "loginForm" do %>
               <div id="modalBody" class="modal-body">
                 <div class="field">
                     <%= label_tag :email, "User:" %></br> 
@@ -172,7 +180,7 @@ $(document).ready(function() {
               </div>
               
               <div class="modal-footer">
-                <%= submit_tag "Login", class: "btn btn-large btn-primary", id: "xcfbutton"%>
+                <%= submit_tag "Login", class: "btn btn-large btn-primary", id: "xcfbutton" %>
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
               </div>
 
