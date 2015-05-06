@@ -1,16 +1,68 @@
+<div id="navPadding"></div>
 <center>
-<div id="nav">
 <% if current_user %>
-  <%= link_to "Home", root_path %> | 
-  <%= link_to "Today Clients", clients_events_path %> | 
-  <%= link_to "All Data", rails_admin_path %> | 
-  <%= link_to "Delete Events", "#deleteModal", "data-toggle" => "modal" %> | 
-  <%= link_to "Test Results", tests_path %> | 
-  <%= link_to "Edit Profile", edit_user_path(current_user.id), remote: true %> | 
-  <%= link_to "Register new admin user", "#registerModal", "data-toggle" => "modal" %> | 
-  <%= link_to "Log out", :logout, method: :post %>
-<% end %>
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+
+    <div class="navbar-header">
+        <%= link_to root_path, :class => "navbar-brand" do %>
+          <span><%= image_tag "home.png", :style => "vertical-align: baseline; width: 20px;" %>Home</span>
+        <% end %>
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <div class="navbar-collapse collapse" id="navbar-main">
+      <ul class="nav navbar-nav">
+        <li>
+          <%= link_to rails_admin_path do %>
+            <span><%= image_tag "data.png", :style => "vertical-align: baseline; width: 20px;" %> All Data</span>
+          <% end %>
+        </li>
+
+        <li>
+          <%= link_to clients_events_path do %>
+            <span><%= image_tag "clients.png", :style => "vertical-align: bottom; width: 22px;" %> Clients</span>
+          <% end %>
+        </li>
+
+        <li>
+          <%= link_to "#deleteModal", "data-toggle" => "modal" do %>
+            <span><%= image_tag "trash.png", :style => "vertical-align: baseline; width: 20px;" %> Delete Events</span>
+          <% end %>
+        </li>
+
+        <li>
+          <%= link_to tests_path do %>
+            <span><%= image_tag "result.png", :style => "vertical-align: bottom; width: 23px;" %> Test Results</span>
+          <% end %>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="user">
+              <span><%= image_tag "user.png", :style => "vertical-align: text-top; width: 30px;" %>User</span>
+            <span class="caret"></span>
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="download">
+            <li><%= link_to "Edit Profile", edit_user_path(current_user.id), remote: true %></li>
+            <li class="divider"></li>
+            <li><%= link_to "Register new admin user", "#registerModal", "data-toggle" => "modal" %></li>
+            <li class="divider"></li>
+            <li><%= link_to "Log out", :logout, method: :post %></li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+  </div>
 </div>
+<% end %>
 
 <h1>Administrator</h1>
 <p style="display: inline-block; color: #ffffff; background-color: DodgerBlue">Available Time Slots</p>

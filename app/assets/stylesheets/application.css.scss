@@ -5,7 +5,20 @@
 */
 
 @import "bootstrap-sprockets";
+
+// Import journal variables
+@import "bootswatch/journal/variables";
+
 @import 'bootstrap';
+
+// Bootstrap body padding for fixed navbar
+.navPadding { 
+  padding-top: 60px; 
+}
+
+// And finally bootswatch style itself
+@import "bootswatch/journal/bootswatch";
+
 @import 'bootstrap-datetimepicker';
 
 .fc-event {
