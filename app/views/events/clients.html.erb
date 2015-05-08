@@ -1,44 +1,89 @@
-<%= link_to 'Back', events_path %>
+<div id="navPadding"></div>
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+
+    <div class="navbar-header">
+        <%= link_to root_path, :class => "navbar-brand" do %>
+          <span><%= image_tag "home.png", :style => "vertical-align: bottom; width: 30px;" %>Home</span>
+        <% end %>
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <div class="navbar-collapse collapse" id="navbar-main">
+      <ul class="nav navbar-nav">
+        <li>
+          <%= link_to events_path do %>
+            <span><%= image_tag "back.png", :style => "vertical-align: sub; width: 27px;" %> Back</span>
+          <% end %>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="user">
+              <span><%= image_tag "user.png", :style => "vertical-align: bottom; width: 26px;" %> User</span>
+            <span class="caret"></span>
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="download">
+            <li><%= link_to "Edit Profile", edit_user_path(current_user.id), remote: true %></li>
+            <li class="divider"></li>
+            <li><%= link_to "Register new admin user", "#registerModal", "data-toggle" => "modal" %></li>
+            <li class="divider"></li>
+            <li><%= link_to "Log out", :logout, method: :post %></li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
 <center>
-<h1><%= Date.today.to_s(:long_time) %></h1>
-<table>
-  <tr>
-    <th style="padding:0 15px 0 15px;">Id</th>
-    <th style="padding:0 15px 0 15px;">Test</th>
-    <th style="padding:0 15px 0 15px;">Client Name</th>
-    <th style="padding:0 15px 0 15px;">From</th>
-    <th style="padding:0 15px 0 15px;">To</th>
-    <th style="padding:0 15px 0 15px;">Email</th>
-    <th style="padding:0 15px 0 15px;">Phone Number</th>
-    <th style="padding:0 15px 0 15px;">Zip Code</th>
-    <th style="padding:0 15px 0 15px;">Show Up</th>
-    <th style="padding:0 15px 0 15px;">Tester</th>
-    <th style="padding:0 15px 0 15px;">Comment</th>
-  </tr>
-  
-  <% @events.each_with_index do |event, index| %>
-  <tr data-id=<%= event.id%>>
-    <td style="padding:0 15px 0 15px;"><%= index + 1 %></td>
-    <td style="padding:0 15px 0 15px;"><%= event.title %></td>
-    <td style="padding:0 15px 0 15px;"><%= event.reservation.first_name %> <%= event.reservation.last_name %></td>
-    <td style="padding:0 15px 0 15px;"><%= event.start_time.to_s(:short_time) %></td>
-    <td style="padding:0 15px 0 15px;"><%= event.end_time.to_s(:short_time) %></td>
-    <td style="padding:0 15px 0 15px;"><%= event.reservation.email %></td>
-    <td style="padding:0 15px 0 15px;"><%= event.reservation.phone_number %></td>
-    <td style="padding:0 15px 0 15px;"><%= event.reservation.zip_code %></td>
-    <td style="padding:0 15px 0 15px;">
-      <% if event.reservation.showup %>
-        Yes
-      <% else %>
-        No
-      <% end %>
-    </td>
-    <td style="padding:0 15px 0 15px;"><%= event.reservation.tester %></td>
-    <td style="padding:0 15px 0 15px;"><%= event.reservation.comment %></td>
-    <td style="padding:0 15px 0 15px;"><%= link_to "Edit", edit_reservation_path(event.reservation), remote: true %></td>
-  </tr>
-  <% end %>
-</table>
+  <h1 style="margin-top: 60px;"><%= Date.today.to_s(:long_time) %></h1>
+  <table class="table table-striped">
+    <tr>
+      <th style="padding:0 30px 0 30px;">#</th>
+      <th style="padding:0 30px 0 30px;">Test</th>
+      <th style="padding:0 30px 0 30px;">Client Name</th>
+      <th style="padding:0 30px 0 30px;">From</th>
+      <th style="padding:0 30px 0 30px;">To</th>
+      <th style="padding:0 30px 0 30px;">Email</th>
+      <th style="padding:0 30px 0 30px;">Phone Number</th>
+      <th style="padding:0 30px 0 30px;">Zip Code</th>
+      <th style="padding:0 30px 0 30px;">Show Up</th>
+      <th style="padding:0 30px 0 30px;">Tester</th>
+      <th style="padding:0 30px 0 30px;">Comment</th>
+      <th style="padding:0 30px 0 30px;">Edit</th>
+    </tr>
+    
+    <% @events.each_with_index do |event, index| %>
+    <tr data-id=<%= event.id%>>
+      <td style="padding:0 30px 0 30px;"><%= index + 1 %></td>
+      <td style="padding:0 30px 0 30px;"><%= event.title %></td>
+      <td style="padding:0 30px 0 30px;"><%= event.reservation.first_name %> <%= event.reservation.last_name %></td>
+      <td style="padding:0 30px 0 30px;"><%= event.start_time.to_s(:short_time) %></td>
+      <td style="padding:0 30px 0 30px;"><%= event.end_time.to_s(:short_time) %></td>
+      <td style="padding:0 30px 0 30px;"><%= event.reservation.email %></td>
+      <td style="padding:0 30px 0 30px;"><%= event.reservation.phone_number %></td>
+      <td style="padding:0 30px 0 30px;"><%= event.reservation.zip_code %></td>
+      <td style="padding:0 30px 0 30px;">
+        <% if event.reservation.showup %>
+          Yes
+        <% else %>
+          No
+        <% end %>
+      </td>
+      <td style="padding:0 30px 0 30px;"><%= event.reservation.tester %></td>
+      <td style="padding:0 30px 0 30px;"><%= event.reservation.comment %></td>
+      <td style="padding:0 30px 0 30px;"><%= link_to "Edit", edit_reservation_path(event.reservation), remote: true %></td>
+    </tr>
+    <% end %>
+  </table>
 </center>
 
 <div id="editModal" class="modal fade" tabindex='-1'></div>

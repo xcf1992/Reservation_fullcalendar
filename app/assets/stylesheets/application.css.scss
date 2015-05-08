@@ -6,8 +6,8 @@
 
 @import "bootstrap-sprockets";
 
-// Import journal variables
-@import "bootswatch/journal/variables";
+// Import cerulean variables
+@import "bootswatch/cerulean/variables";
 
 @import 'bootstrap';
 
@@ -17,16 +17,16 @@
 }
 
 // And finally bootswatch style itself
-@import "bootswatch/journal/bootswatch";
+@import "bootswatch/cerulean/bootswatch";
 
 @import 'bootstrap-datetimepicker';
 
-.fc-event {
-  font-size: x-small;
+.fc {
+	width: 80%;
 }
 
-.fc{
-	width: 80%;
+.navbar {
+  font-weight: 100;
 }
 
 #datetimepicker4, #datetimepicker5 {

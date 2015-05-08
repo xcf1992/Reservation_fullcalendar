@@ -34,6 +34,10 @@ Rails.application.routes.draw do
     get "reservation_without_info", on: :member
   end
 
+  resources :test_result_files do
+      get 'download', on: :member
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

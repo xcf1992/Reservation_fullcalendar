@@ -30,6 +30,7 @@ class TestResultFilesController < ApplicationController
 
 	def index
 		@files = TestResultFile.all
+		@newFile = TestResultFile.new
 	end
 
 	def show
@@ -45,6 +46,11 @@ class TestResultFilesController < ApplicationController
 	      format.html { redirect_to test_result_files_path, notice: 'File has been successfully deleted.' }
 	      format.json { head :no_content }
 	    end
+	end
+
+	def download
+		file = TestResultFile.find_by_id(params[:id])
+  		send_file file.result.path, :type => file.result_content_type
 	end
 
 	private

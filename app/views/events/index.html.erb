@@ -6,7 +6,7 @@
 
     <div class="navbar-header">
         <%= link_to root_path, :class => "navbar-brand" do %>
-          <span><%= image_tag "home.png", :style => "vertical-align: baseline; width: 20px;" %>Home</span>
+          <span><%= image_tag "home.png", :style => "vertical-align: bottom; width: 25px;" %>Home</span>
         <% end %>
       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
         <span class="icon-bar"></span>
@@ -19,25 +19,25 @@
       <ul class="nav navbar-nav">
         <li>
           <%= link_to rails_admin_path do %>
-            <span><%= image_tag "data.png", :style => "vertical-align: baseline; width: 20px;" %> All Data</span>
+            <span><%= image_tag "data.png", :style => "vertical-align: text-bottom; width: 23px;" %> All Data</span>
           <% end %>
         </li>
 
         <li>
           <%= link_to clients_events_path do %>
-            <span><%= image_tag "clients.png", :style => "vertical-align: bottom; width: 22px;" %> Clients</span>
+            <span><%= image_tag "clients.png", :style => "vertical-align: bottom; width: 24px;" %> Clients</span>
           <% end %>
         </li>
 
         <li>
           <%= link_to "#deleteModal", "data-toggle" => "modal" do %>
-            <span><%= image_tag "trash.png", :style => "vertical-align: baseline; width: 20px;" %> Delete Events</span>
+            <span><%= image_tag "trash.png", :style => "vertical-align: text-bottom; width: 22px;" %> Delete Events</span>
           <% end %>
         </li>
 
         <li>
           <%= link_to tests_path do %>
-            <span><%= image_tag "result.png", :style => "vertical-align: bottom; width: 23px;" %> Test Results</span>
+            <span><%= image_tag "result.png", :style => "vertical-align: sub; width: 22px;" %> Test Results</span>
           <% end %>
         </li>
       </ul>
@@ -45,7 +45,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="user">
-              <span><%= image_tag "user.png", :style => "vertical-align: text-top; width: 30px;" %>User</span>
+              <span><%= image_tag "user.png", :style => "vertical-align: bottom; width: 26px;" %> User</span>
             <span class="caret"></span>
           </a>
 
@@ -64,7 +64,7 @@
 </div>
 <% end %>
 
-<h1>Administrator</h1>
+<h1 style="margin-top: 60px;">Administrator</h1>
 <p style="display: inline-block; color: #ffffff; background-color: DodgerBlue">Available Time Slots</p>
 <p style="display: inline-block; color: #ffffff; background-color: gray">Unavailable Time Slots</p>
 <div id='calendarEvents'></div>

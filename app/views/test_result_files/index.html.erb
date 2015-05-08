@@ -1,18 +1,101 @@
-<%= link_to 'Back', tests_path %>
+=<div id="navPadding"></div>
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+
+    <div class="navbar-header">
+        <%= link_to root_path, :class => "navbar-brand" do %>
+          <span><%= image_tag "home.png", :style => "vertical-align: bottom; width: 30px;" %>Home</span>
+        <% end %>
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <div class="navbar-collapse collapse" id="navbar-main">
+      <ul class="nav navbar-nav">
+        <li>
+          <%= link_to tests_path do %>
+            <span><%= image_tag "back.png", :style => "vertical-align: sub; width: 27px;" %> Back</span>
+          <% end %>
+        </li>
+
+        <li>
+          <%= link_to "#uploadModal", "data-toggle" => "modal" do %>
+            <span><%= image_tag "upload.png", :style => "vertical-align: text-bottom; width: 25px;" %> Upload Test Result</span>
+          <% end %>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="user">
+              <span><%= image_tag "user.png", :style => "vertical-align: bottom; width: 26px;" %> User</span>
+            <span class="caret"></span>
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="download">
+            <li><%= link_to "Edit Profile", edit_user_path(current_user.id), remote: true %></li>
+            <li class="divider"></li>
+            <li><%= link_to "Register new admin user", "#registerModal", "data-toggle" => "modal" %></li>
+            <li class="divider"></li>
+            <li><%= link_to "Log out", :logout, method: :post %></li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
 
 <center>
-  <h1>Test Result</h1>
-  <table>
+  <h1 style="margin-top: 60px;">Test Result</h1>
+  <table class="table table-striped">
     <tr>
       <th style="padding:0 30px 0 30px;">Test Result File</th>
+      <th style="padding:0 30px 0 30px;">View Result File</th>
+      <th style="padding:0 30px 0 30px;">Delete Result File</th>
+      <th style="padding:0 30px 0 30px;">Download Result File</th>
     </tr>
 
     <% @files.each do |file| %>
   	  <tr>
   	    <td style="padding:0 30px 0 30px;"><%= file.result_file_name %></td>
-        <td style="padding:0 15px 0 15px;"><%= link_to "View", test_result_file_path(file.id) %></td>
-        <td><%= link_to 'Delete', file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td style="padding:0 30px 0 30px;"><%= link_to "View", test_result_file_path(file.id) %></td>
+        <td style="padding:0 30px 0 30px;">
+          <%= link_to 'Delete', file, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+        <td style="padding:0 30px 0 30px;">
+          <%= link_to "Download", download_test_result_file_path(file.id) %>
+        </td>
   	  </tr>
 	  <% end %>
   </table>
+</center>
+
+<div id="uploadModal" class="modal fade" tabindex='-1'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="myModalLabel">Upload New Test Result</h4>
+            </div>
+            <%= form_for @newFile, :html => {:class => "form-horizontal center"} do |f| %>
+              <div id="modalBody" class="modal-body">
+                <div class="form-group">
+                  <%= f.label :result, "File", class: "col-md-4 control-label" %>
+                  <div class="col-md-8">
+                      <%= f.file_field :result %>
+                  </div>
+                </div>
+                    
+              </div>
+              
+              <div class="modal-footer">
+                  <%= f.submit 'Upload', :class => 'btn btn-primary' %>
+                  <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+              </div>
+            <% end %>
+        </div>
+    </div>
 </center>
