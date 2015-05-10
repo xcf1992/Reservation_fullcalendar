@@ -92,23 +92,23 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4>Client Information</h4>
+                <h4>Notification Registration</h4>
             </div>
 
             <%= form_for @client, :html => {:class => "form-horizontal center"} do |f| %>
               <div id="modalBody" class="modal-body">
 
                 <div class="form-group">
-                    <%= f.label :identification, class: "col-md-4 control-label" %>
+                    <%= f.label :identification, "Test Number", class: "col-md-4 control-label" %>
                     <div class="col-md-8">
-                        <%= f.text_field :identification, class: "form-control" %>
+                        <%= f.text_field :identification, class: "form-control", :placeholder => "76C##### or 76GH#####" %>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <%= f.label :confirmation, class: "col-md-4 control-label" %>
                     <div class="col-md-8">
-                        <%= f.text_field :confirmation, class: "form-control" %>
+                        <%= f.text_field :confirmation, class: "form-control", :placeholder => "76C##### or 76GH#####" %>
                     </div>
                 </div>
                 
