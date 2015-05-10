@@ -1,5 +1,6 @@
 class TestsController < ApplicationController
   before_action :set_test, only: [:show, :edit, :update, :destroy]
+  skip_before_action :require_login, only: [:show, :notAvailable, :find]
 
   # GET /tests
   # GET /tests.json
@@ -11,6 +12,21 @@ class TestsController < ApplicationController
   # GET /tests/1
   # GET /tests/1.json
   def show
+    @testResult = Test.find(params[:id])
+  end
+
+  def find
+    id = params[:number]
+    @testResult = Test.find_by(:testId => id)
+    if @testResult
+      redirect_to @testResult
+    else
+      redirect_to notAvailable_test_path(id)
+    end
+  end
+
+  def notAvailable
+    @id = params[:id]
   end
 
   # GET /tests/new

@@ -141,6 +141,10 @@
   cursor: pointer;
 }
 
-.message-box-layer a.dismiss{
+.message-box-layer a.dismiss {
   top: 7px;
+}
+
+label.error {
+  color: red;
 }

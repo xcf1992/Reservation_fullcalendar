@@ -1,27 +1,103 @@
-<p id="notice"><%= notice %></p>
+<center>
+<div class="jumbotron" style="width: 60%">
+  <div class="row">
+    <div class="col-md-8 col-sm-6">
+      <h1 style="margin-right: 130px">The Early Test</h1>
+      <p>You Don't Need To Wait To Get Tested For HIV Anymore</p>
+      <p>
+      <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#checkModal"style="margin-right: 356px; color: #ffffff; background-color: #b20638; border-color: #5e031e;">
+        Get Your Results
+      </button> 
+      </p>
+    </div>
+    <div class="col-md-4 col-sm-6 hidden-xs">
+      <%= image_tag "earlytest.png", :class => "img-responsive img-rounded" %>
+    </div>
+  </div>
+</div>
+</center>
 
-<h1>Listing Pages</h1>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var validator = $("#checkForm").validate({
+      onfocusout: false,
+      onkeyup: false,
+      onclick: false,
 
-<table>
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+      submitHandler: function(form) {
+          $("#checkModal").modal('hide');
+          return true;
+      },
 
-  <tbody>
-    <% @pages.each do |page| %>
-      <tr>
-        <td><%= page.description %></td>
-        <td><%= link_to 'Show', page %></td>
-        <td><%= link_to 'Edit', edit_page_path(page) %></td>
-        <td><%= link_to 'Destroy', page, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      rules: {
+          "number": {
+              required: true
+          },
+          "confirm": {
+              required: true,
+              equalTo: "#number"
+          }
+      },
 
-<br>
+      messages: {
+          "number": {
+              required: "Please enter your test number"
+          },
+          "confirm": {
+              required: "Please enter your test number again",
+              equalTo: "Please make sure you enter the same number twice"
+          }
+      }
+    });
+    $('#checkModal').on('hidden.bs.modal', function(){
+        $(this).find('form')[0].reset();
+        validator.resetForm();
+     });
+  });  
+</script>
 
-<%= link_to 'New Page', new_page_path %>
+<div id="checkModal" class="modal fade" tabindex='-1'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+          <h2>Get Your Early Test Results</h4>
+      </div>
+
+      <div class="row" style="margin-top: 30px;">
+        <div class="col-md-5">
+          <div>
+            <%= image_tag "card.png", :class => "center-block img-shadow img-rounded img-responsive", :style =>"width: 90%; box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);"%>
+            <p style="margin-left: 15px;"><b>If you recently had lab tests as part of the Early Test Program, you were given a card with instructions on how to access your results online or by phone. The card also has the date that your results will be available, as well as your confidential test number. Once your results become available they remain in our automated results system for 90 days after the test date.</b></p>
+          </div>
+        </div>
+        
+        <div class="col-md-7 center-block">
+          <%= form_tag find_tests_path, :class => "form-inline", :id => "checkForm" do %>
+            <div id="modalBody" class="modal-body" style="padding: 5px;">
+              <h2>Online</h2>
+              
+              <div class="form-group">
+                <%= label_tag "To get your test results now, enter your confidential test number:" %></br>
+                <%= text_field_tag :number, params[:number], class: "form-control", style: "width: 300px;", :placeholder => "76C##### or 76GH#####" %>
+              </div>
+
+              <div class="form-group">
+                <%= label_tag "To get your test results now, enter your confidential test number:" %></br>
+                <%= text_field_tag :confirm, params[:confirm], class: "form-control", style: "width: 300px;", :placeholder => "76C##### or 76GH#####" %>
+              </div>
+
+              <%= submit_tag "Submit", :class => "btn btn-large btn-primary", :style => "margin-top: 10px;" %>
+            </div>
+          <% end %>
+          <div class="modal-footer">
+            <h2 style="margin-top: auto; margin-bottom: 0px; text-align: left;">By Phone</h2>
+            <p class="lead">
+              <a href="tel:18773235050" style="margin-right: 120px;"><span class="glyphicon glyphicon-earphone"></span> (877) 323-5050</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
