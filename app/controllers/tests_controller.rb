@@ -27,6 +27,7 @@ class TestsController < ApplicationController
 
   def notAvailable
     @id = params[:id]
+    @client = Client.new
   end
 
   # GET /tests/new

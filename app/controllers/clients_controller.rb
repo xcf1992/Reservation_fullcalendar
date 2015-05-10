@@ -9,9 +9,9 @@ class ClientsController < ApplicationController
       @client = Client.new(client_params)
 
       if @client.save
-        redirect_to root_path, notice: 'Client Information has been saved successfully.'
+        redirect_to :back, notice: 'Client Information has been saved successfully.'
       else
-        redirect_to root_path, notice: 'Client Information save failed. Please make sure input the correct identification number'
+        redirect_to :back, notice: 'Client Information save failed. Please make sure input the correct identification number'
       end
     end
 

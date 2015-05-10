@@ -1,1 +1,137 @@
-<h1><%= @id %> Not Exist</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3"></div>
+    
+    <div class="col-md-6">
+      <div class="alert alert-info">
+        <h2 class="text-primary">
+          <span>Results for</span> (<span><%= @id %></span>) 
+          <span>are not available.</span>
+        </h2>
+        <p>
+	        We are sorry that we are not able to give you your results at this time. If you are calling before the date written on your Early Test card, please call back on or after the date on your card. Otherwise, please call 
+	        <a class="alert-link" href="tel:16195438080">(619) 543-8080</a>.
+        </p>
+        <p>
+	      <b>Besides, Do you want to be notified by email and text message when the test result is ready?
+	        <u>
+	        <%= link_to "Yes", "#clientModal", "data-toggle" => "modal", :style => "color: red;" %>
+	        </u>
+	      </b>
+        </p>
+      </div>
+      
+      <div>
+        <%= link_to pages_path do %>
+          <span class="btn btn-lg btn-success" role="button">
+            <span class="glyphicon glyphicon-circle-arrow-left"></span> Go Back
+          </span>
+	    <% end %>
+      </div>          
+    </div>
+    
+    <div class="col-md-3"></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var validator2 = $("#new_client").validate({
+	        onkeyup: false,
+	        onclick: false,
+
+	        submitHandler: function(form) {
+	            $("#clientModal").modal('hide');
+	            return true;
+	        },
+
+	        rules: {
+	            "client[identification]": {
+	                required: true
+	            },
+	            "client[confirmation]": {
+	                required: true,
+	                equalTo: "#client_identification"
+	            },
+	            "client[email]": {
+	                required: true,
+	                email: true
+	            },
+	            "client[phone]": {
+	                required: true,
+	                phoneUS: true
+	            }
+	        },
+
+	        messages: {
+	            "client[identification]": {
+	                required: "Please enter your identification number"
+	            },
+	            "client[confirmation]": {
+	                required: "Please enter your identification number again",
+	                equalTo: "Please make sure you input the same identification number"
+	            },
+	            "client[email]": {
+	                required: "Please enter your email address",
+	                email: "You have entered an invalid email address. Please try again."
+	            },
+	            "client[phone]": {
+	                required: "Please enter your phone number",
+	                phoneUS: "Invalid US phone number."
+	            }
+	        }
+	    });
+	    $('#clientModal').on('hidden.bs.modal', function(){
+	        $(this).find('form')[0].reset();
+	        validator2.resetForm();
+	    });
+    });
+</script>
+
+<div id="clientModal" class="modal fade" tabindex='-1'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Client Information</h4>
+            </div>
+
+            <%= form_for @client, :html => {:class => "form-horizontal center"} do |f| %>
+              <div id="modalBody" class="modal-body">
+
+                <div class="form-group">
+                    <%= f.label :identification, class: "col-md-4 control-label" %>
+                    <div class="col-md-8">
+                        <%= f.text_field :identification, class: "form-control" %>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <%= f.label :confirmation, class: "col-md-4 control-label" %>
+                    <div class="col-md-8">
+                        <%= f.text_field :confirmation, class: "form-control" %>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <%= f.label :email, class: "col-md-4 control-label" %>
+                    <div class="col-md-8">
+                        <%= f.text_field :email, class: "form-control" %>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <%= f.label :phone, class: "col-md-4 control-label" %>
+                    <div class="col-md-8">
+                        <%= f.text_field :phone, class: "form-control" %>
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <%= submit_tag "Save", class: "btn btn-large btn-primary" %>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+              </div>
+
+            <% end %>
+        </div>
+    </div>
+</div>

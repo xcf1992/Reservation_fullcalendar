@@ -3,7 +3,6 @@ class AppointmentInfoController < ApplicationController
 	
 	def index
 		@reservation = Reservation.new
-		@client = Client.new
 		@page = Page.find_by_id(1)
 	end
 end
