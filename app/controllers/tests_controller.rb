@@ -19,7 +19,11 @@ class TestsController < ApplicationController
     id = params[:number]
     @testResult = Test.find_by(:testId => id)
     if @testResult
-      redirect_to @testResult
+      if @testResult.result == "CT NOT DETECTED; NG NOT DETECTED"
+        redirect_to @testResult
+      else
+        redirect_to alert_test_path(id)
+      end
     else
       redirect_to notAvailable_test_path(id)
     end
@@ -28,6 +32,10 @@ class TestsController < ApplicationController
   def notAvailable
     @id = params[:id]
     @client = Client.new
+  end
+  
+  def alert
+    @id = params[:id]
   end
 
   # GET /tests/new

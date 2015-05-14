@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 
   resources :tests do
     get 'notAvailable', on: :member
+    get 'alert', on: :member
     collection do      
       post 'find'
     end

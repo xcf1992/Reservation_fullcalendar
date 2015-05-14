@@ -6,6 +6,7 @@ class PagesController < ApplicationController
   # GET /pages.json
   def index
     @pages = Page.all
+    @client = Client.new
   end
 
   # GET /pages/1

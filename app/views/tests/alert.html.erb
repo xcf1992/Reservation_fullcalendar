@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-md-3"></div>
+  
+  <div class="col-md-6">
+    <div class="alert alert-danger" style="color: red;">
+      <h2 class="text-danger" style="color: red;">
+        <span >Results for</span> (<span><%= @id %></span>)
+        <span>are positive !</span>
+      </h2>
+      <p><b>The results of your Early Test (<span><%= @id %></span>) are positive!
+      Please call us as soon as possible to schedule a follow up consultation for treatment at 
+      <a class="alert-link" href="tel:16195438080" style="color: red;">619-543-8080.</a></b></p>
+    </div>
+    
+    <div>
+      <%= link_to pages_path do %>
+        <span class="btn btn-lg btn-danger">
+          <span class="glyphicon glyphicon-circle-arrow-left"></span> Go Back
+        </span>
+	  <% end %>
+    </div>          
+  </div>
+  
+  <div class="col-md-3"></div>
+</div>

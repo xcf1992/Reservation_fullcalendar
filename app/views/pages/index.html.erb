@@ -1,17 +1,21 @@
 <center>
-<div class="jumbotron" style="width: 60%">
-  <div class="row">
-    <div class="col-md-8 col-sm-6">
-      <h1 style="margin-right: 130px">The Early Test</h1>
-      <p>You Don't Need To Wait To Get Tested For HIV Anymore</p>
-      <p>
-      <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#checkModal"style="margin-right: 356px; color: #ffffff; background-color: #b20638; border-color: #5e031e;">
-        Get Your Results
-      </button> 
-      </p>
-    </div>
-    <div class="col-md-4 col-sm-6 hidden-xs">
-      <%= image_tag "earlytest.png", :class => "img-responsive img-rounded" %>
+<div class="container">
+  <div class="jumbotron" style="width:100%">
+    <div class="row">
+      <div class="col-md-8 col-sm-6">
+        <h1 style="margin-right: 130px">The Early Test</h1>
+        <p>You Don't Need To Wait To Get Tested For HIV Anymore</p>
+        <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#checkModal" style="color: #ffffff; background-color: #b20638; border-color: #5e031e; margin-right: 170px">
+          Get Your Results
+        </button>
+
+        <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#clientModal" style="color: #ffffff; background-color: #b20638; border-color: #5e031e;">
+          Register Notification
+        </button>
+      </div>
+      <div class="col-md-4 col-sm-6 hidden-xs">
+        <%= image_tag "earlytest.png", :class => "img-responsive img-rounded" %>
+      </div>
     </div>
   </div>
 </div>
@@ -19,6 +23,61 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
+    $('#clientModal').on('show.bs.modal', function(){
+          $('#client_identification').val("<%= @id %>");
+          $('#client_confirmation').val("<%= @id %>");
+      });
+
+    var validator2 = $("#new_client").validate({
+        onkeyup: false,
+        onclick: false,
+
+        submitHandler: function(form) {
+            $("#clientModal").modal('hide');
+            return true;
+        },
+
+        rules: {
+            "client[identification]": {
+                required: true
+            },
+            "client[confirmation]": {
+                required: true,
+                equalTo: "#client_identification"
+            },
+            "client[email]": {
+                required: true,
+                email: true
+            },
+            "client[phone]": {
+                required: true,
+                phoneUS: true
+            }
+        },
+
+        messages: {
+            "client[identification]": {
+                required: "Please enter your identification number"
+            },
+            "client[confirmation]": {
+                required: "Please enter your identification number again",
+                equalTo: "Please make sure you input the same identification number"
+            },
+            "client[email]": {
+                required: "Please enter your email address",
+                email: "You have entered an invalid email address. Please try again."
+            },
+            "client[phone]": {
+                required: "Please enter your phone number",
+                phoneUS: "Invalid US phone number."
+            }
+        }
+    });
+    $('#clientModal').on('hidden.bs.modal', function(){
+        $(this).find('form')[0].reset();
+        validator2.resetForm();
+    });
+      
     var validator = $("#checkForm").validate({
       onkeyup: false,
       onclick: false,
@@ -99,4 +158,52 @@
       </div>
     </div>
   </div>
+</div>
+
+<div id="clientModal" class="modal fade" tabindex='-1'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Notification Registration</h4>
+            </div>
+
+            <%= form_for @client, :html => {:class => "form-horizontal center"} do |f| %>
+              <div id="modalBody" class="modal-body">
+
+                <div class="form-group">
+                    <%= f.label :identification, "Test Number", class: "col-md-4 control-label" %>
+                    <div class="col-md-8">
+                        <%= f.text_field :identification, class: "form-control" %>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <%= f.label :confirmation, class: "col-md-4 control-label" %>
+                    <div class="col-md-8">
+                        <%= f.text_field :confirmation, class: "form-control" %>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <%= f.label :email, class: "col-md-4 control-label" %>
+                    <div class="col-md-8">
+                        <%= f.text_field :email, class: "form-control" %>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <%= f.label :phone, class: "col-md-4 control-label" %>
+                    <div class="col-md-8">
+                        <%= f.text_field :phone, class: "form-control" %>
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <%= submit_tag "Save", class: "btn btn-large btn-primary" %>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+              </div>
+
+            <% end %>
+        </div>
+    </div>
 </div>

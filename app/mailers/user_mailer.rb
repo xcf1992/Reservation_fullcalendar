@@ -6,4 +6,9 @@ class UserMailer < ApplicationMailer
     @event = @user.event
     mail(to: @user.email, subject: 'Lead the Way Appointment Confirmation')
   end
+
+  def registration_email(client)
+  	@id = client.identification
+    mail(to: client.email, subject: 'Lead the Way Notification Registration')
+  end
 end

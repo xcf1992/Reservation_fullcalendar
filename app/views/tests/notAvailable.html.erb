@@ -23,9 +23,9 @@
       
       <div>
         <%= link_to pages_path do %>
-          <span class="btn btn-lg btn-success" role="button">
+          <button type="button" class="btn btn-lg btn-primary">
             <span class="glyphicon glyphicon-circle-arrow-left"></span> Go Back
-          </span>
+          </button>
 	    <% end %>
       </div>          
     </div>
@@ -36,6 +36,11 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('#clientModal').on('show.bs.modal', function(){
+	        $('#client_identification').val("<%= @id %>");
+	        $('#client_confirmation').val("<%= @id %>");
+	    });
+
 		var validator2 = $("#new_client").validate({
 	        onkeyup: false,
 	        onclick: false,
@@ -101,14 +106,14 @@
                 <div class="form-group">
                     <%= f.label :identification, "Test Number", class: "col-md-4 control-label" %>
                     <div class="col-md-8">
-                        <%= f.text_field :identification, class: "form-control", :placeholder => "76C##### or 76GH#####" %>
+                        <%= f.text_field :identification, class: "form-control" %>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <%= f.label :confirmation, class: "col-md-4 control-label" %>
                     <div class="col-md-8">
-                        <%= f.text_field :confirmation, class: "form-control", :placeholder => "76C##### or 76GH#####" %>
+                        <%= f.text_field :confirmation, class: "form-control" %>
                     </div>
                 </div>
                 

@@ -91,7 +91,7 @@ Rails.application.configure do
     domain: "example.com",
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name:            "leadtheway.sandiego@gmail.com",
-    password:             "ltwsandiego"
+    user_name: "leadthewaysd@gmail.com",
+    password: "letmeinltw"
   }
 end
