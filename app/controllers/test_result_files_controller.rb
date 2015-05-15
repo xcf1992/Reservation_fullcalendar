@@ -12,12 +12,41 @@ class TestResultFilesController < ApplicationController
 			  	id = row[1]
 			  end
 		  	  if row[0] == "Test Result"
-		  	  	testResult = row[1]
-		  	  	newTest = Test.new(:result => testResult, :testId => id)
-		  	  	newTest.save
+		  	  	ct = nil
+			  	ng = nil
+			  	final = nil
+		  	  	
+		  	  	if row[1] == "INVALID"
+		  	  		ct = "INVALID"
+		  	  		ng = "INVALID"
+		  	  		final = "INVALID"
+		  	  	else
+			  	  testResult = row[1].split(";")
+			  	  ctResult = testResult[0]
+			  	  ngResult = testResult[1]
+
+			  	  if ctResult == "CT NOT DETECTED"
+			  	  	ct = "Negative"
+			  	  else
+			  	  	ct = "Positive"
+			  	  end
+
+			  	  if ngResult == " NG NOT DETECTED"
+			  	  	ng = "Negative"
+			  	  else
+			  	  	ng = "Positive"
+			  	  end
+			  	  
+			  	  if ct == "Negative" && ng == "Negative"
+			  	  	final = "Negative"
+			  	  else
+			  	  	final = "Positive"
+			  	  end
+			  	end
+			  	newTest = Test.new(:result => final, :testId => id, :CT => ct, :NG => ng)
+			  	newTest.save
 		  	  end
-			end
-			
+			end			
 			redirect_to tests_path, notice: 'File has been uploaded successfully.'
 		else
 			redirect_to tests_path, notice: 'File Upload failed, maybe you are trying to upload the same file.'

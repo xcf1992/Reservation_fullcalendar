@@ -5,7 +5,7 @@ class TestsController < ApplicationController
   # GET /tests
   # GET /tests.json
   def index
-    @tests = Test.all
+    @tests = Test.order("created_at DESC").page(params[:page]).per(3)
     @file = TestResultFile.new
   end
 
@@ -19,7 +19,7 @@ class TestsController < ApplicationController
     id = params[:number]
     @testResult = Test.find_by(:testId => id)
     if @testResult
-      if @testResult.result == "CT NOT DETECTED; NG NOT DETECTED"
+      if @testResult.result == "Positive"
         redirect_to @testResult
       else
         redirect_to alert_test_path(id)
@@ -95,6 +95,6 @@ class TestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def test_params
-      params.require(:test).permit(:result, :testId)
+      params.require(:test).permit(:result, :testId, :CT, :NG)
     end
 end
