@@ -148,3 +148,17 @@
 label.error {
   color: red;
 }
+
+.th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.pretty th .asc {
+  background-image: url(/images/up.png);
+}
+
+.pretty th .desc {
+  background-image: url(/images/down.png);
+}

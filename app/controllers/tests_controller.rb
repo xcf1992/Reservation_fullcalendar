@@ -1,11 +1,12 @@
 class TestsController < ApplicationController
   before_action :set_test, only: [:show, :edit, :update, :destroy]
   skip_before_action :require_login, only: [:show, :notAvailable, :find]
+  helper_method :sort_column, :sort_direction
 
   # GET /tests
   # GET /tests.json
   def index
-    @tests = Test.order("created_at DESC").page(params[:page]).per(3)
+    @tests = Test.order(sort_column + " " + sort_direction).page(params[:page]).per(3)
     @file = TestResultFile.new
   end
 
@@ -95,6 +96,14 @@ class TestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def test_params
-      params.require(:test).permit(:result, :testId, :CT, :NG)
+      params.require(:test).permit(:result, :testId, :CT, :NG, :start_at, :end_at)
+    end
+
+    def sort_column
+      Test.column_names.include?(params[:sort]) ? params[:sort] : "end_at"
+    end
+    
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
     end
 end

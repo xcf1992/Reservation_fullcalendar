@@ -59,11 +59,12 @@
   <h1 style="margin-top: 60px;">Test Result</h1>
   <table class="table table-striped">
     <tr>
-      <th style="padding:0 60px 0 60px;">id</th>
-      <th style="padding:0 60px 0 60px;">Test Result</th>
-      <th style="padding:0 60px 0 60px;">CT</th>
-      <th style="padding:0 60px 0 60px;">NG</th>
-      <th style="padding:0 60px 0 60px;">Result Date</th>
+      <th style="padding:0 60px 0 60px;"><%= sortable "id" %></th>
+      <th style="padding:0 60px 0 60px;"><%= sortable "Test Result" %></th>
+      <th style="padding:0 60px 0 60px;"><%= sortable "CT" %></th>
+      <th style="padding:0 60px 0 60px;"><%= sortable "NG" %></th>
+      <th style="padding:0 60px 0 60px;"><%= sortable "start_at", "Start Time" %></th>
+      <th style="padding:0 60px 0 60px;"><%= sortable "end_at", "End Time" %></th>
     </tr>
 
     <% @tests.each_with_index do |t| %>
@@ -72,7 +73,8 @@
       <td style="padding:0 60px 0 60px;"><%= t.result %></td>
       <td style="padding:0 60px 0 60px;"><%= t.CT %></td>
       <td style="padding:0 60px 0 60px;"><%= t.NG %></td>
-      <td style="padding:0 60px 0 60px;"><%= t.created_at.to_s(:full_time) %></td>
+      <td style="padding:0 60px 0 60px;"><%= t.start_at.to_s(:full_time) %></td>
+      <td style="padding:0 60px 0 60px;"><%= t.end_at.to_s(:full_time) %></td>
     </tr>
   <% end %>
   </table>

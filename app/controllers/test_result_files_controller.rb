@@ -7,10 +7,21 @@ class TestResultFilesController < ApplicationController
 			results = CSV.parse(text)
 
 			id = nil
+			startTime = nil
+			endTime = nil
 			results.each do |row| 
 			  if row[0] == "Sample ID"
 			  	id = row[1]
 			  end
+
+			  if row[0] == "Start Time"
+			  	startTime = DateTime.strptime(row[1], "%m/%d/%y %H:%M:%S")
+			  end
+
+			  if row[0] == "End Time"
+			  	endTime = DateTime.strptime(row[1], "%m/%d/%y %H:%M:%S")
+			  end
+
 		  	  if row[0] == "Test Result"
 		  	  	ct = nil
 			  	ng = nil
@@ -43,7 +54,7 @@ class TestResultFilesController < ApplicationController
 			  	  	final = "Positive"
 			  	  end
 			  	end
-			  	newTest = Test.new(:result => final, :testId => id, :CT => ct, :NG => ng)
+			  	newTest = Test.new(:result => final, :testId => id, :CT => ct, :NG => ng, :start_at => startTime, :end_at => endTime)
 			  	newTest.save
 		  	  end
 			end			
