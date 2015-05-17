@@ -149,16 +149,16 @@ label.error {
   color: red;
 }
 
-.th .current {
+th .current {
   padding-right: 12px;
   background-repeat: no-repeat;
   background-position: right center;
 }
 
-.pretty th .asc {
-  background-image: url(/images/up.png);
+th .asc {
+  background-image: image-url("up.png");
 }
 
-.pretty th .desc {
-  background-image: url(/images/down.png);
+th .desc {
+  background-image: image-url("down.png");
 }

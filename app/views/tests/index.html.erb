@@ -55,33 +55,56 @@
   </div>
 </div>
 
-<center>
-  <h1 style="margin-top: 60px;">Test Result</h1>
-  <table class="table table-striped">
-    <tr>
-      <th style="padding:0 60px 0 60px;"><%= sortable "id" %></th>
-      <th style="padding:0 60px 0 60px;"><%= sortable "Test Result" %></th>
-      <th style="padding:0 60px 0 60px;"><%= sortable "CT" %></th>
-      <th style="padding:0 60px 0 60px;"><%= sortable "NG" %></th>
-      <th style="padding:0 60px 0 60px;"><%= sortable "start_at", "Start Time" %></th>
-      <th style="padding:0 60px 0 60px;"><%= sortable "end_at", "End Time" %></th>
-    </tr>
+<h1 style="margin-top: 60px;"></h1>
 
-    <% @tests.each_with_index do |t| %>
-    <tr>
-      <td style="padding:0 60px 0 60px;"><%= t.testId %></td>
-      <td style="padding:0 60px 0 60px;"><%= t.result %></td>
-      <td style="padding:0 60px 0 60px;"><%= t.CT %></td>
-      <td style="padding:0 60px 0 60px;"><%= t.NG %></td>
-      <td style="padding:0 60px 0 60px;"><%= t.start_at.to_s(:full_time) %></td>
-      <td style="padding:0 60px 0 60px;"><%= t.end_at.to_s(:full_time) %></td>
-    </tr>
-  <% end %>
-  </table>
+<center>
+<div class="panel panel-default" style="width: 85%">
+  <div class="panel-heading" style="text-align: left;">Search Filter</div>
+  <div class="panel-body">
+  </div>
+  <div class="panel-footer">
+    <%= form_tag tests_path, :method => 'get' do %>
+      <%= hidden_field_tag :direction, params[:direction] %>
+      <%= hidden_field_tag :sort, params[:sort] %>
+      <div class="input-group">
+        <%= text_field_tag :search, params[:search], class: "form-control", :placeholder => "Reference Number" %>
+        <span class="input-group-btn">
+        <%= submit_tag "Search", :class => "btn btn-primary", :name => nil %></span>
+      </div>
+    <% end %>
+  </div>
+</div>
+</center>
+
+<center>
+<div class="panel panel-primary" style="width: 85%">
+  <div class="panel-heading">Test Result</div>
+    <table class="table table-striped">
+      <tr>
+        <th style="padding:0 60px 0 60px;"><%= sortable "id" %></th>
+        <th style="padding:0 60px 0 60px;"><%= sortable "Test Result" %></th>
+        <th style="padding:0 60px 0 60px;"><%= sortable "CT" %></th>
+        <th style="padding:0 60px 0 60px;"><%= sortable "NG" %></th>
+        <th style="padding:0 60px 0 60px;"><%= sortable "start_at", "Start Time" %></th>
+        <th style="padding:0 60px 0 60px;"><%= sortable "end_at", "End Time" %></th>
+      </tr>
+
+      <% @tests.each_with_index do |t| %>
+      <tr>
+        <td style="padding:0 60px 0 60px;"><%= t.testId %></td>
+        <td style="padding:0 60px 0 60px;"><%= t.result %></td>
+        <td style="padding:0 60px 0 60px;"><%= t.CT %></td>
+        <td style="padding:0 60px 0 60px;"><%= t.NG %></td>
+        <td style="padding:0 60px 0 60px;"><%= t.start_at.to_s(:full_time) %></td>
+        <td style="padding:0 60px 0 60px;"><%= t.end_at.to_s(:full_time) %></td>
+      </tr>
+    <% end %>
+    </table>
+</div>
   <nav>
     <%= paginate @tests, :outer_window => 5 %>
   </nav>
-</body>
+</center>
 
 <div id="uploadModal" class="modal fade" tabindex='-1'>
     <div class="modal-dialog">
