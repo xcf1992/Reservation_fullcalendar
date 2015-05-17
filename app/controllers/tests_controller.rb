@@ -6,7 +6,7 @@ class TestsController < ApplicationController
   # GET /tests
   # GET /tests.json
   def index
-    @tests = Test.search(params[:search]).order(sort_column + " " + sort_direction).page(params[:page]).per(3)
+    @tests = Test.search(params[:search]).filter(params[:ctPositive], params[:ngPositive], params[:result]).order(sort_column + " " + sort_direction).page(params[:page]).per(3)
     @file = TestResultFile.new
   end
 

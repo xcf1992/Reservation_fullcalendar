@@ -464,7 +464,7 @@
                       <%= f.label :start_time, "Start at:", class: "col-md-4 control-label" %>
                       <div class="col-md-8">
                         <div class='input-group date' id='datetimepicker6'>
-                          <%=f.text_field :start_time, class: "form-control", id: "start_time", name: "start_time" %>
+                          <%= f.text_field :start_time, class: "form-control", id: "start_time", name: "start_time" %>
                           <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                           </span>
                         </div>
@@ -475,7 +475,7 @@
                       <%= f.label :end_time, "End at:", class: "col-md-4 control-label" %>
                       <div class="col-md-8">
                         <div class='input-group date' id="datetimepicker7" >
-                          <%=f.text_field :end_time, class: "form-control", id: "end_time", name: "end_time" %>
+                          <%= f.text_field :end_time, class: "form-control", id: "end_time", name: "end_time" %>
                           <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                           </span>
                         </div>
@@ -483,17 +483,17 @@
                   </div>
 
                   <div class="form-group">
-                    <%=f.label :exception, "Except", class: "col-md-4 control-label"%>
+                    <%= f.label :exception, "Except", class: "col-md-4 control-label"%>
                     <div class="col-md-8">
-                      <%=f.check_box :exception, :onchange => "showException(this.checked);" %>
+                      <%= f.check_box :exception, :onchange => "showException(this.checked);" %>
                     </div>
                   </div>
 
                   <div id = "except_time" style = "display:none;" class="form-group">
-                    <%=f.label :except_time, "No Events During:", class: "col-md-4 control-label" %>
+                    <%= f.label :except_time, "No Events During:", class: "col-md-4 control-label" %>
                     <div class="col-sm-8">
-                        <%=f.text_field :except_time_start, class: "form-control", id: "datetimepicker4" %><b> ~ </b>
-                        <%=f.text_field :except_time_end, class: "form-control", id: "datetimepicker5" %>
+                        <%= f.text_field :except_time_start, class: "form-control", id: "datetimepicker4" %><b> ~ </b>
+                        <%= f.text_field :except_time_end, class: "form-control", id: "datetimepicker5" %>
                     </div>
                   </div>
 
@@ -512,10 +512,10 @@
                   </div>
 
                   <div id = "stop_time" style = "display:none;" class="form-group">
-                    <%=f.label :stop_time, "Until:", class: "col-md-4 control-label" %>
+                    <%= f.label :stop_time, "Until:", class: "col-md-4 control-label" %>
                     <div class="col-md-8">
                       <div class='input-group date' id='datetimepicker3'>
-                        <%=f.text_field :stop_time, class: "form-control" %>
+                        <%= f.text_field :stop_time, class: "form-control" %>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                       </div> 
                     </div>

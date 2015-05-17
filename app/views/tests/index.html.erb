@@ -60,16 +60,47 @@
 <center>
 <div class="panel panel-default" style="width: 85%">
   <div class="panel-heading" style="text-align: left;">Search Filter</div>
-  <div class="panel-body">
-  </div>
-  <div class="panel-footer">
-    <%= form_tag tests_path, :method => 'get' do %>
+  
+  <div class="panel-body" style="text-align: left;">
+    <%= form_tag tests_path, :method => 'get', :class => "form-inline" do %>
       <%= hidden_field_tag :direction, params[:direction] %>
       <%= hidden_field_tag :sort, params[:sort] %>
+
+      <div class="form-group">
+        <% if params[:result] %>
+          <%= check_box_tag :result, params[:result], true, :style => "vertical-align: text-bottom;" %>
+        <% else %>
+          <%= check_box_tag :result, params[:result], false, :style => "vertical-align: text-bottom;" %>
+        <% end %>
+        <%= label_tag :result, "Positive Results" %>
+      </div>
+      
+      <div class="form-group">
+        <% if params[:ctPositive] %>
+          <%= check_box_tag :ctPositive, params[:ctPositive], true, :style => "vertical-align: text-bottom; margin-left: 50px;" %>
+        <% else %>
+          <%= check_box_tag :ctPositive, params[:ctPositive], false, :style => "vertical-align: text-bottom; margin-left: 50px;" %>
+        <% end %>
+        <%= label_tag :ctPositive, "CT Positive" %>
+      </div>
+
+      <div class="form-group">
+        <% if params[:ngPositive] %>
+          <%= check_box_tag :ngPositive, params[:ngPositive], true, :style => "vertical-align: text-bottom; margin-left: 50px;" %>
+        <% else %>
+          <%= check_box_tag :ngPositive, params[:ngPositive], false, :style => "vertical-align: text-bottom; margin-left: 50px;" %>
+        <% end %>
+        <%= label_tag :ngPositive, "NG Positive" %>
+      </div>
+
+      <%= submit_tag "Filter", :class => "btn btn-primary", :style => "margin-left: 50px" %>
+  </div>
+
+  <div class="panel-footer">
       <div class="input-group">
         <%= text_field_tag :search, params[:search], class: "form-control", :placeholder => "Reference Number" %>
         <span class="input-group-btn">
-        <%= submit_tag "Search", :class => "btn btn-primary", :name => nil %></span>
+        <%= submit_tag "Search", :class => "btn btn-primary" %></span>
       </div>
     <% end %>
   </div>
