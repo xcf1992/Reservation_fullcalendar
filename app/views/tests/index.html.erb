@@ -94,6 +94,12 @@
       </div>
 
       <%= submit_tag "Filter", :class => "btn btn-primary", :style => "margin-left: 50px" %>
+
+      <%= link_to tests_path(format: "xls", :search => params[:search], :ctPositive => params[:ctPositive], :ngPositive => params[:ngPositive], :result => params[:result]) do %>
+        <span class="btn btn-danger" style="float: right;">
+          <span class="glyphicon glyphicon-download-alt"></span> Download All Search Results(Excel)
+        </span>
+      <% end %>  
   </div>
 
   <div class="panel-footer">

@@ -6,8 +6,16 @@ class TestsController < ApplicationController
   # GET /tests
   # GET /tests.json
   def index
-    @tests = Test.search(params[:search]).filter(params[:ctPositive], params[:ngPositive], params[:result]).order(sort_column + " " + sort_direction).page(params[:page]).per(3)
+    @tests = Test.search(params[:search]).filter(params[:ctPositive], params[:ngPositive], params[:result]).order(sort_column + " " + sort_direction).page(params[:page]).per(15)
+    @download = Test.search(params[:search]).filter(params[:ctPositive], params[:ngPositive], params[:result]).order(sort_column + " " + sort_direction)
+    puts @download.size
+    puts @tests.size
     @file = TestResultFile.new
+    
+    respond_to do |format|
+      format.html
+      format.xls
+    end
   end
 
   # GET /tests/1
