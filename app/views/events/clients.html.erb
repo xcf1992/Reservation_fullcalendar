@@ -43,8 +43,10 @@
   </div>
 </div>
 
+<h1 style="margin-top: 60px;"></h1>
 <center>
-  <h1 style="margin-top: 60px;"><%= Date.today.to_s(:long_time) %></h1>
+<div class="panel panel-primary" style="width: 98%">
+  <div class="panel-heading"><%= Date.today.to_s(:long_time) %></div>
   <table class="table table-striped">
     <tr>
       <th style="padding:0 30px 0 30px;">#</th>
@@ -84,6 +86,7 @@
     </tr>
     <% end %>
   </table>
+</div>
 </center>
 
 <div id="editModal" class="modal fade" tabindex='-1'></div>

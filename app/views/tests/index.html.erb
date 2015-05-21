@@ -116,17 +116,18 @@
 <center>
 <div class="panel panel-primary" style="width: 85%">
   <div class="panel-heading">Test Result</div>
-    <table class="table table-striped">
-      <tr>
-        <th style="padding:0 60px 0 60px;"><%= sortable "id" %></th>
-        <th style="padding:0 60px 0 60px;"><%= sortable "Test Result" %></th>
-        <th style="padding:0 60px 0 60px;"><%= sortable "CT" %></th>
-        <th style="padding:0 60px 0 60px;"><%= sortable "NG" %></th>
-        <th style="padding:0 60px 0 60px;"><%= sortable "start_at", "Start Time" %></th>
-        <th style="padding:0 60px 0 60px;"><%= sortable "end_at", "End Time" %></th>
-      </tr>
 
-      <% @tests.each_with_index do |t| %>
+  <table class="table table-striped">
+    <tr>
+      <th style="padding:0 60px 0 60px;"><%= sortable "id" %></th>
+      <th style="padding:0 60px 0 60px;"><%= sortable "Test Result" %></th>
+      <th style="padding:0 60px 0 60px;"><%= sortable "CT" %></th>
+      <th style="padding:0 60px 0 60px;"><%= sortable "NG" %></th>
+      <th style="padding:0 60px 0 60px;"><%= sortable "start_at", "Start Time" %></th>
+      <th style="padding:0 60px 0 60px;"><%= sortable "end_at", "End Time" %></th>
+    </tr>
+
+    <% @tests.each_with_index do |t| %>
       <tr>
         <td style="padding:0 60px 0 60px;"><%= t.testId %></td>
         <td style="padding:0 60px 0 60px;"><%= t.result %></td>
@@ -136,13 +137,12 @@
         <td style="padding:0 60px 0 60px;"><%= t.end_at.to_s(:full_time) %></td>
       </tr>
     <% end %>
-    </table>
+  </table>
 </div>
-  <nav>
-    <%= paginate @tests, :outer_window => 5 %>
-  </nav>
+<nav>
+  <%= paginate @tests, :outer_window => 5 %>
+</nav>
 </center>
-
 <div id="uploadModal" class="modal fade" tabindex='-1'>
     <div class="modal-dialog">
         <div class="modal-content">
