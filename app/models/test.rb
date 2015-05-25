@@ -1,6 +1,14 @@
 class Test < ActiveRecord::Base
 	validates :testId, uniqueness: true
 
+    RESULTS = [
+    	     " ",
+             "Negative",
+             "Positive",
+             "Error",
+             "Invalid"
+    ]
+
 	def self.search(search)
 	  if search
 	    where('testId LIKE ?', "%#{search}%")
@@ -10,30 +18,30 @@ class Test < ActiveRecord::Base
 	end
 
 	def self.filter(ctP, ngP, resultP)
-	  if ctP
-        if ngP
-		  if resultP
-		    where(:CT => "Positive").where(:NG => "Positive").where(:result => "Positive")
+	  if ctP != " "
+        if ngP != " "
+		  if resultP != " "
+		    where(:CT => ctP).where(:NG => ngP).where(:result => ngP)
 		  else
-            where(:CT => "Positive").where(:NG => "Positive")
+            where(:CT => ctP).where(:NG => ngP)
 		  end
 		else
-		  if resultP
-		    where(:CT => "Positive").where(:result => "Positive")
+		  if resultP != " "
+		    where(:CT => ctP).where(:result => resultP)
 		  else
-            where(:CT => "Positive")
+            where(:CT => ctP)
 		  end	
 		end
       else
-        if ngP
-		  if resultP
-		    where(:NG => "Positive").where(:result => "Positive")
+        if ngP != " "
+		  if resultP != " "
+		    where(:NG => ngP).where(:result => resultP)
 		  else
-            where(:NG => "Positive")
+            where(:NG => ngP)
 		  end
 		else
-		  if resultP
-		    where(:result => "Positive")
+		  if resultP != " "
+		    where(:result => resultP)
 		  else
             all
 		  end	

@@ -67,35 +67,23 @@
       <%= hidden_field_tag :sort, params[:sort] %>
 
       <div class="form-group">
-        <% if params[:result] %>
-          <%= check_box_tag :result, params[:result], true, :style => "vertical-align: text-bottom;" %>
-        <% else %>
-          <%= check_box_tag :result, params[:result], false, :style => "vertical-align: text-bottom;" %>
-        <% end %>
-        <%= label_tag :result, "Positive Results" %>
-      </div>
-      
-      <div class="form-group">
-        <% if params[:ctPositive] %>
-          <%= check_box_tag :ctPositive, params[:ctPositive], true, :style => "vertical-align: text-bottom; margin-left: 50px;" %>
-        <% else %>
-          <%= check_box_tag :ctPositive, params[:ctPositive], false, :style => "vertical-align: text-bottom; margin-left: 50px;" %>
-        <% end %>
-        <%= label_tag :ctPositive, "CT Positive" %>
+        <%= label_tag :result, "Test Result: " %>
+        <%= select_tag :result, options_for_select(Test::RESULTS, params[:result]) %>
       </div>
 
       <div class="form-group">
-        <% if params[:ngPositive] %>
-          <%= check_box_tag :ngPositive, params[:ngPositive], true, :style => "vertical-align: text-bottom; margin-left: 50px;" %>
-        <% else %>
-          <%= check_box_tag :ngPositive, params[:ngPositive], false, :style => "vertical-align: text-bottom; margin-left: 50px;" %>
-        <% end %>
-        <%= label_tag :ngPositive, "NG Positive" %>
+        <%= label_tag :CT, "CT: ", :style => "margin-left: 30px" %>
+        <%= select_tag :CT, options_for_select(Test::RESULTS, params[:CT]) %>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :NG, "NG: ", :style => "margin-left: 30px" %>
+        <%= select_tag :NG, options_for_select(Test::RESULTS, params[:NG]) %>        
       </div>
 
       <%= submit_tag "Filter", :class => "btn btn-primary", :style => "margin-left: 50px" %>
 
-      <%= link_to tests_path(format: "xls", :search => params[:search], :ctPositive => params[:ctPositive], :ngPositive => params[:ngPositive], :result => params[:result]) do %>
+      <%= link_to tests_path(format: "xls", :search => params[:search], :CT => params[:CT], :NG => params[:NG], :result => params[:result]) do %>
         <span class="btn btn-danger" style="float: right;">
           <span class="glyphicon glyphicon-download-alt"></span> Download All Search Results(Excel)
         </span>

@@ -16,7 +16,7 @@ ActiveRecord::Base.establish_connection(
   adapter:  'sqlite3', # or 'postgresql' or 'sqlite3'
   pool: '5',
   timeout: '5000',
-  database: 'db/development.sqlite3'
+  database: '/home/avrccalendar/www/db/development.sqlite3'
 )
 
 class Test < ActiveRecord::Base
