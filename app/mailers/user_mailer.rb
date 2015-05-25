@@ -11,4 +11,14 @@ class UserMailer < ApplicationMailer
   	@id = client.identification
     mail(to: client.email, subject: 'Lead the Way Notification Registration')
   end
+
+  def notificate_email(client)
+    @testId = client.identification
+    mail(to: client.email, subject: 'Early Test Result Notification')
+  end
+
+  def alert_email(client)
+    @testId = client.identification
+    mail(to: client.email, subject: 'Early Test Result')
+  end
 end

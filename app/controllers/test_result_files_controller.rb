@@ -54,8 +54,16 @@ class TestResultFilesController < ApplicationController
 			  	  	final = "Positive"
 			  	  end
 			  	end
-			  	newTest = Test.new(:result => final, :testId => id, :CT => ct, :NG => ng, :start_at => startTime, :end_at => endTime)
-			  	newTest.save
+			  	@newTest = Test.new(:result => final, :testId => id, :CT => ct, :NG => ng, :start_at => startTime, :end_at => endTime)
+			  	if @newTest.save
+			  	  if @client = Client.find_by(:identification => id)
+			  	  	if final == "Positive"
+			  	  		UserMailer.alert_email(@client).deliver_now
+			  	  	elsif final == "Negative"
+			  	  		UserMailer.notificate_email(@client).deliver_now
+			  	  	end
+			  	  end
+			  	end
 		  	  end
 			end			
 			redirect_to tests_path, notice: 'File has been uploaded successfully.'

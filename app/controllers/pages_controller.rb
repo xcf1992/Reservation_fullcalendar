@@ -1,12 +1,10 @@
 class PagesController < ApplicationController
   before_action :set_page, only: [:show, :edit, :update, :destroy]
-  skip_before_action :require_login, only: [:index]
 
   # GET /pages
   # GET /pages.json
   def index
     @pages = Page.all
-    @client = Client.new
   end
 
   # GET /pages/1

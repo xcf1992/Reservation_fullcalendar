@@ -59,7 +59,14 @@
 
 <center>
 <div class="panel panel-default" style="width: 85%">
-  <div class="panel-heading" style="text-align: left;">Search Filter</div>
+  <div class="panel-heading" style="text-align: left; padding: 20px 10px 20px 10px;">
+  Search Filter
+    <%= link_to tests_path(format: "xls", :search => params[:search], :CT => params[:CT], :NG => params[:NG], :result => params[:result]) do %>
+      <span class="btn btn-danger" style="float: right; margin-top: -9px;">
+        <span class="glyphicon glyphicon-download-alt"></span> Download All Search Results(Excel)
+      </span>
+    <% end %>
+  </div>
   
   <div class="panel-body" style="text-align: left;">
     <%= form_tag tests_path, :method => 'get', :class => "form-inline" do %>
@@ -82,12 +89,6 @@
       </div>
 
       <%= submit_tag "Filter", :class => "btn btn-primary", :style => "margin-left: 50px" %>
-
-      <%= link_to tests_path(format: "xls", :search => params[:search], :CT => params[:CT], :NG => params[:NG], :result => params[:result]) do %>
-        <span class="btn btn-danger" style="float: right;">
-          <span class="glyphicon glyphicon-download-alt"></span> Download All Search Results(Excel)
-        </span>
-      <% end %>  
   </div>
 
   <div class="panel-footer">

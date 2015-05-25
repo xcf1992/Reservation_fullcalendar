@@ -23,6 +23,14 @@ class Test < ActiveRecord::Base
   validates :testId, uniqueness: true
 end
 
+class Client < ActiveRecord::Base
+  validates :identification, uniqueness: true
+end
+
+class UserMailer < ApplicationMailer
+  default from: 'notification@leadtheway.com'
+end
+
 Socket.tcp_server_loop(9999) do |connection|
   begin
     puts connection.remote_address.to_s + "Connected"
@@ -150,8 +158,16 @@ Socket.tcp_server_loop(9999) do |connection|
                 if ngResult == "INVALID" || ctResult == "INVALID"
                   result = "INVALID"
                 end
-                newTest = Test.new(:result => result, :testId => id, :CT => ctResult, :NG => ngResult, :start_at => start_at, :end_at => end_at)
-                newTest.save
+                @newTest = Test.new(:result => result, :testId => id, :CT => ctResult, :NG => ngResult, :start_at => start_at, :end_at => end_at)
+                if @newTest.save
+                  if @client = Client.find_by(:identification => id)
+                    if result == "Positive"
+                      UserMailer.alert_email(@client).deliver_now
+                    elsif result == "Negative"
+                      UserMailer.notificate_email(@client).deliver_now
+                    end
+                  end
+                end
               end
 
               i = i + 1

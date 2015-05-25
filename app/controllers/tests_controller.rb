@@ -1,7 +1,11 @@
 class TestsController < ApplicationController
   before_action :set_test, only: [:show, :edit, :update, :destroy]
-  skip_before_action :require_login, only: [:show, :notAvailable, :find]
+  skip_before_action :require_login, only: [:show, :notAvailable, :find, :check]
   helper_method :sort_column, :sort_direction
+
+  def check
+    @client = Client.new
+  end
 
   # GET /tests
   # GET /tests.json
@@ -31,9 +35,9 @@ class TestsController < ApplicationController
     @testResult = Test.find_by(:testId => id)
     if @testResult
       if @testResult.result == "Positive"
-        redirect_to @testResult
-      else
         redirect_to alert_test_path(id)
+      else
+        redirect_to @testResult
       end
     else
       redirect_to notAvailable_test_path(id)
