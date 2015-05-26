@@ -3,6 +3,7 @@ require 'socket'
 require 'time'
 require 'active_record'
 require 'sqlite3'
+require 'action_mailer'
 
 ACK = "\006"
 ENQ = "\005"
@@ -16,8 +17,22 @@ ActiveRecord::Base.establish_connection(
   adapter:  'sqlite3', # or 'postgresql' or 'sqlite3'
   pool: '5',
   timeout: '5000',
-  database: '/home/avrccalendar/www/db/development.sqlite3'
+  database: 'db/development.sqlite3'
 )
+
+ActionMailer::Base.perform_deliveries = true
+ActionMailer::Base.raise_delivery_errors = true
+ActionMailer::Base.default :charset => "utf-8"
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587,
+    domain: "example.com",
+    authentication: "plain",
+    enable_starttls_auto: true,
+    user_name: "leadthewaysd@gmail.com",
+    password: "letmeinltw"
+}
 
 class Test < ActiveRecord::Base
   validates :testId, uniqueness: true
@@ -27,8 +42,49 @@ class Client < ActiveRecord::Base
   validates :identification, uniqueness: true
 end
 
+class ApplicationMailer < ActionMailer::Base
+  default from: "notification@leadtheway.com"
+  layout 'mailer'
+end
+
 class UserMailer < ApplicationMailer
   default from: 'notification@leadtheway.com'
+
+  def notificate_email(client)
+    testId = client.identification
+    mail(to: client.email, subject: 'Early Test Result Notification',
+         content_type: "text/html",
+         body: "
+<div style='font-size: 30px'>
+  <b>
+    Early Test Results For (#{testId}) Are Available To Check
+  </b>
+  <div>
+    <br>The results of your Early Test <b>(#{testId})</b> are ready to check now!</br>
+    <br>Please go to the Website to get your test results or call us at 619-543-8080.</br>
+    <br></br>
+    <br>Best Regards.</br>
+  </div>
+</div>")
+  end
+
+  def alert_email(client)
+    testId = client.identification
+    mail(to: client.email, subject: 'Early Test Result',
+         content_type: "text/html",
+         body: "
+<div style='font-size: 30px'>
+  <b style='color: red'>Attention Here!</b>
+  <div>
+    <br>The results of your Early Test (<b>#{testId}</b>) are <b style='color: red'>positive</b>!</br>
+    <br>
+      Please call us as soon as possible to schedule a follow up consultation for treatment at 619-543-8080.
+    </br>
+    <br></br>
+    <br>Best Regards</br>
+  </div>
+</div>")
+  end
 end
 
 Socket.tcp_server_loop(9999) do |connection|
