@@ -17,6 +17,8 @@
 //= require moment
 //= require bootstrap-datetimepicker
 //= require fullcalendar
+//= require bootstrap-wysihtml5
+//= require bootstrap-wysihtml5/locales
 //= require jquery.qtip.js
 //= require jquery.validate
 //= require jquery.validate.additional-methods

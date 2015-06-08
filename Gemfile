@@ -8,6 +8,8 @@ gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
+gem 'bootstrap-wysihtml5-rails', '~> 0.3.3.7'
+
 gem 'daemons', '~> 1.2.2'
 
 gem 'kaminari'

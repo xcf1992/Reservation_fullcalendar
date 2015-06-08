@@ -21,7 +21,7 @@ class Test < ActiveRecord::Base
 	  if ctP != " "
         if ngP != " "
 		  if resultP != " "
-		    where(:CT => ctP).where(:NG => ngP).where(:result => ngP)
+		    where(:CT => ctP).where(:NG => ngP).where(:result => resultP)
 		  else
             where(:CT => ctP).where(:NG => ngP)
 		  end
