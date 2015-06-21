@@ -10,6 +10,7 @@ class ClientsController < ApplicationController
       id = @client.identification
       @result = Test.find_by(:testId => id)
 
+      # if test result already exists, show it to the clients directly
       if @result
         if @result.result == "CT NOT DETECTED; NG NOT DETECTED" 
           redirect_to @result, 
@@ -20,6 +21,7 @@ class ClientsController < ApplicationController
         end
       end and return
 
+      # otherwise, create the new client item
       if @client.save
         UserMailer.registration_email(@client).deliver_now
         redirect_to :back, notice: 'Notification registration has been saved successfully. Please check your email for confirmation'

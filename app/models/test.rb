@@ -17,6 +17,7 @@ class Test < ActiveRecord::Base
 	  end
 	end
 
+	# filter test results under different conditions
 	def self.filter(ctP, ngP, resultP)
 	  if ctP != " "
         if ngP != " "

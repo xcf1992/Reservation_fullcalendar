@@ -1,4 +1,5 @@
 module ApplicationHelper
+	# function to sort all the test resuls filtered out
     def sortable(column, title = nil)
 	  title ||= column.titleize
 	  css_class = column == sort_column ? "current #{sort_direction}" : nil

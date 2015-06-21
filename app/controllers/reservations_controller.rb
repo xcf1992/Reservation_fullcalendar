@@ -23,6 +23,7 @@ class ReservationsController < ApplicationController
   	@reservation = Reservation.new(reservation_params)
     @existing_events = Event.where(:occupied => true).where('events.start_time > ?', DateTime.now.beginning_of_day).where('events.start_time < ?', DateTime.now.end_of_day)
     
+    # check all the appointment today to make sure client do not make multiple applointments with one email address
     for event in @existing_events
       if event.reservation.email == @reservation.email
         redirect_to root_path,

@@ -1,3 +1,4 @@
+<!-- page shown to the tester after they login -->
 <div id="navPadding"></div>
 <center>
 <% if current_user %>
@@ -139,6 +140,7 @@
       return false;
     });
     
+    // block the screen during events creation
     $('#submitButton').on('click', function() {
       $('#eventCalModal').modal('hide');
       $('#loadModal').modal({
@@ -215,8 +217,8 @@
       }
     });
 
+    // event calendar shown to the tester
     $('#calendarEvents').fullCalendar({
-
         header: {
           left: 'prev,next today',
           center: 'title',
@@ -346,6 +348,7 @@
 <div id="reservation_modal_container"></div>
 <div id="reservation_modal_container2"></div>
 
+<!-- modal used to create new user -->
 <div id="registerModal" class="modal fade" tabindex='-1'>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -388,6 +391,7 @@
     </div>
 </div>
 
+<!-- modal used to bloack the screeen -->
 <div id="loadModal" class="modal fade" tabindex='-1'>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -398,6 +402,7 @@
     </div>
 </div>
 
+<!-- modal used to delete events -->
 <div id="deleteModal" class="modal fade" tabindex='-1'>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -435,6 +440,7 @@
     </div>
 </div>
 
+<!-- modal used to create new events -->
 <div id="eventCalModal" class="modal fade" tabindex='-1'>
     <div class="modal-dialog">
         <div class="modal-content">

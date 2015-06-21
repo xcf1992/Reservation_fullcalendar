@@ -13,7 +13,10 @@ class TestsController < ApplicationController
     params[:result] ||= " "
     params[:CT] ||= " "
     params[:NG] ||= " "
+    # get all test results under the search and filter condition
     @tests = Test.search(params[:search]).filter(params[:CT], params[:NG], params[:result]).order(sort_column + " " + sort_direction).page(params[:page])
+    
+    # select all the test resuls that need to download
     @download = Test.search(params[:search]).filter(params[:CT], params[:NG], params[:result]).order(sort_column + " " + sort_direction)
 
     @file = TestResultFile.new

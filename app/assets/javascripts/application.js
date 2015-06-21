@@ -24,6 +24,7 @@
 //= require jquery.validate.additional-methods
 //= require_tree .
 
+// function used to decide whether to show the replication option in the events creation
 function showReplication(value){
     switch (value) {
         case 'Replicate On Weekdays':
@@ -39,6 +40,7 @@ function showReplication(value){
     }
 }
 
+// function used to decide whether to show the exception option in the events creation
 function showException(value){
     switch (value) {
         case true:
@@ -85,6 +87,7 @@ $(function(){
     };
 });
 
+// function used to show notification bar after certain action, appointment reserved successfully for example
 $(function() {
   $('.alert_messages').on('click', '.dismiss', function() {
     $('.message', '#message_drawer').remove();

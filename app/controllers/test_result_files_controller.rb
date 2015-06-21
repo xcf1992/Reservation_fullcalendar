@@ -1,5 +1,7 @@
 class TestResultFilesController < ApplicationController
 	def create
+		# create new test results by uploading an excel file
+		# the format is set by the cepheid machine
 		@file = TestResultFile.new(file_params)
 
 		if @file.save
@@ -54,6 +56,8 @@ class TestResultFilesController < ApplicationController
 			  	  	final = "Positive"
 			  	  end
 			  	end
+
+			  	# save new test results to the database and send email notification to the client
 			  	@newTest = Test.new(:result => final, :testId => id, :CT => ct, :NG => ng, :start_at => startTime, :end_at => endTime)
 			  	if @newTest.save
 			  	  if @client = Client.find_by(:identification => id)
